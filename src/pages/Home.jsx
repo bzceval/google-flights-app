@@ -7,7 +7,14 @@ const Home = () => {
   const darkMode = true;
   const theme = useTheme();
   return (
-    <Grid2 container sx={{ display: "flex", justifyContent: "center" }}>
+    <Grid2
+      container
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <Grid2
         size={{ xs: 12, md: 7 }}
         sx={{ position: "relative", textAlign: "center" }}
@@ -29,7 +36,7 @@ const Home = () => {
           Flights
         </Typography>
       </Grid2>
-      <Grid2 size={{ xs: 12 }}>
+      <Grid2 size={{ xs: 12, md: 5 }}>
         <SearchBar />
       </Grid2>
     </Grid2>
