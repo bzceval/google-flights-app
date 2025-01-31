@@ -43,7 +43,7 @@ const SearchBar = () => {
 
   const handleMenuClose = (option, type) => {
     if (type === "trip")
-      setSelectedOption(option); // Seçilen nesneyi direkt kaydet
+      setSelectedOption(option);
     else setSelectedClass(option);
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
   };
