@@ -7,7 +7,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Grid2,
+  Grid,
+  useTheme,
 } from "@mui/material";
 import {
   SwapHoriz as SwapHorizIcon,
@@ -18,6 +19,7 @@ import {
   SyncAlt as SyncAltIcon,
   TrendingFlat as TrendingFlatIcon,
   MultipleStop as MultipleStopIcon,
+  CalendarMonthOutlined as CalendarMonthOutlinedIcon,
 } from "@mui/icons-material";
 import PassengerSelector from "./PassengerSelector";
 
@@ -32,9 +34,9 @@ const classOptions = ["Economy", "Premium Economy", "Business", "First"];
 const SearchBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(menuOptions[0]); // Başlangıç değeri nesne
+  const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
   const [selectedClass, setSelectedClass] = useState("Economy");
-
+  const theme = useTheme();
   const handleMenuOpen = (event, type) =>
     type === "trip"
       ? setAnchorEl(event.currentTarget)
@@ -49,24 +51,25 @@ const SearchBar = () => {
   return (
     <Paper
       sx={{
-        height: "170px",
         padding: "10px 30px",
         position: "relative",
+        backgroundColor: theme.palette.mainColors.secondary,
+        border: "none",
         boxShadow:
           "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",
       }}
     >
-      <Grid2 container spacing={2} alignItems="center">
-        <Grid2 item>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item>
           <Button
             onClick={(e) => handleMenuOpen(e, "trip")}
             endIcon={<ExpandMoreIcon />}
             sx={{
-              color: "#fff",
               textTransform: "capitalize",
               display: "flex",
               alignItems: "center",
               gap: 1,
+              color: theme.palette.mainColors.secondaryText,
             }}
           >
             {selectedOption.icon} {selectedOption.label}
@@ -81,22 +84,33 @@ const SearchBar = () => {
                 key={index}
                 onClick={() => handleMenuClose(option, "trip")}
               >
-                <Box display="flex" alignItems="center" gap={1}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={1}
+                  sx={{
+                    color: theme.palette.mainColors.secondaryText,
+                    fontSize: ".9rem",
+                  }}
+                >
                   {option.icon}
                   {option.label}
                 </Box>
               </MenuItem>
             ))}
           </Menu>
-        </Grid2>
-        <Grid2 item>
+        </Grid>
+        <Grid item>
           <PassengerSelector />
-        </Grid2>
-        <Grid2 item>
+        </Grid>
+        <Grid item>
           <Button
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
-            sx={{ color: "#fff", textTransform: "capitalize" }}
+            sx={{
+              color: theme.palette.mainColors.secondaryText,
+              textTransform: "capitalize",
+            }}
           >
             {selectedClass}
           </Button>
@@ -109,16 +123,20 @@ const SearchBar = () => {
               <MenuItem
                 key={index}
                 onClick={() => handleMenuClose(option, "class")}
+                sx={{
+                  color: theme.palette.mainColors.secondaryText,
+                  fontSize: ".9rem",
+                }}
               >
                 {option}
               </MenuItem>
             ))}
           </Menu>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
 
-      <Grid2 container spacing={1} alignItems="center" mt={2} mb={4}>
-        <Grid2 item xs={5}>
+      <Grid container spacing={1} mt={2} mb={4} alignItems="center">
+        <Grid item xs={12} sm={5} md={3}>
           <TextField
             fullWidth
             variant="outlined"
@@ -127,18 +145,24 @@ const SearchBar = () => {
               startAdornment: <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />,
             }}
             sx={{
-              bgcolor: "#202124",
               borderRadius: 1,
+              color: "#fff",
               input: { color: "#fff" },
             }}
           />
-        </Grid2>
-        <Grid2 item>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={2}
+          md={"auto"}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
           <IconButton sx={{ color: "#fff" }}>
             <SwapHorizIcon />
           </IconButton>
-        </Grid2>
-        <Grid2 item xs={5}>
+        </Grid>
+        <Grid item xs={12} sm={5} md={3}>
           <TextField
             fullWidth
             variant="outlined"
@@ -147,37 +171,46 @@ const SearchBar = () => {
               startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
             }}
             sx={{
-              bgcolor: "#202124",
               borderRadius: 1,
+              color: "#fff",
               input: { color: "#fff" },
             }}
           />
-        </Grid2>
-      </Grid2>
+        </Grid>
+        <Grid item xs={12} sm={6} md={5}>
+          <TextField
+            fullWidth
+            type="date"
+            variant="outlined"
+            InputProps={{
+              startAdornment: <CalendarMonthOutlinedIcon sx={{ mr: 1 }} />,
+            }}
+            sx={{
+              borderRadius: 1,
+              color: "#fff",
+              input: { color: "#fff" },
+            }}
+          />
+        </Grid>
+      </Grid>
 
-      <Box
-        sx={{
-          position: "absolute",
-          top: "85%",
-          left: "50%",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          variant="contained"
-          sx={{
-            bgcolor: "#8AB4F8",
-            textDecoration: "capitalize",
-            borderRadius: "24px",
-            textTransform: "capitalize",
-            "&:hover": { bgcolor: "#AECBFA" },
-          }}
-          startIcon={<SearchIcon />}
-        >
-          Search
-        </Button>
-      </Box>
+      <Grid container justifyContent="center">
+        <Grid item xs={6} sm={4}>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#8AB4F8",
+              borderRadius: "24px",
+              textTransform: "capitalize",
+              "&:hover": { bgcolor: "#AECBFA" },
+            }}
+            startIcon={<SearchIcon />}
+            fullWidth
+          >
+            Search
+          </Button>
+        </Grid>
+      </Grid>
     </Paper>
   );
 };

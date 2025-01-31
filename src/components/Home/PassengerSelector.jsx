@@ -42,7 +42,7 @@ const PassengerSelector = () => {
     <>
       <Button
         sx={{
-          color: "#fff",
+          color: theme.palette.mainColors.secondaryText,
         }}
         startIcon={<PeopleIcon />}
         onClick={handleOpen}
@@ -60,7 +60,7 @@ const PassengerSelector = () => {
         sx={{
           "& .MuiPaper-root": {
             bgcolor: "#202124",
-            color: "#fff",
+            color: theme.palette.mainColors.secondaryText,
             padding: "10px",
             borderRadius: "5px",
             minWidth: "275px",
@@ -88,8 +88,8 @@ const PassengerSelector = () => {
                 size="small"
                 onClick={() => handleChange(item.type, "decrease")}
                 sx={{
-                  color: "#fff",
-                  borderRadius: "5px", 
+                  borderRadius: "5px",
+                  color: theme.palette.mainColors.secondaryText,
                 }}
               >
                 <RemoveIcon fontSize="small" />
@@ -99,7 +99,7 @@ const PassengerSelector = () => {
                 size="small"
                 onClick={() => handleChange(item.type, "increase")}
                 sx={{
-                  color: "#fff",
+                  color: theme.palette.mainColors.secondaryText,
                   borderRadius: "5px",
                 }}
               >

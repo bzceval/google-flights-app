@@ -6,7 +6,9 @@ export const lightTheme = createTheme({
     mainColors: {
       default: "#fff",
       text: "#70757a",
-      secondary: "#fff"
+      secondary: "#fff",
+      secondaryText: "#70757a",
+      btnColor: "#90caf9",
     },
   },
 });
@@ -17,7 +19,9 @@ export const darkTheme = createTheme({
     mainColors: {
       default: "#202124",
       text: "#e8eaed",
-      secondary: "rgb(32,33,36)",
+      secondary: "#3a3b3f",
+      secondaryText: "#9aa0a6",
+      btnColor: "#90caf9",
     },
   },
 });

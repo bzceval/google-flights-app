@@ -11,8 +11,9 @@ const Home = () => {
       container
       sx={{
         display: "flex",
-        justifyContent: "center",
         flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Grid2
