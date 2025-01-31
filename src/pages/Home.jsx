@@ -1,6 +1,7 @@
 import { Grid2, Typography, useTheme } from "@mui/material";
 import FlightLight from "../assets/images/flights_light.svg";
 import FlightDark from "../assets/images/flights_dark.svg";
+import SearchBar from "../components/Home/SearchBar";
 
 const Home = () => {
   const darkMode = true;
@@ -27,6 +28,9 @@ const Home = () => {
         >
           Flights
         </Typography>
+      </Grid2>
+      <Grid2 size={{ xs: 12 }}>
+        <SearchBar />
       </Grid2>
     </Grid2>
   );
