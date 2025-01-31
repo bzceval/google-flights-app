@@ -12,9 +12,8 @@ import {
 import {
   SwapHoriz as SwapHorizIcon,
   Search as SearchIcon,
-  FlightTakeoff as FlightTakeoffIcon,
-  FlightLand as FlightLandIcon,
-  CalendarToday as CalendarTodayIcon,
+  FiberManualRecordOutlined as FiberManualRecordOutlinedIcon,
+  LocationOnOutlined as LocationOnOutlinedIcon,
   People as PeopleIcon,
   ExpandMore as ExpandMoreIcon,
   SyncAlt as SyncAltIcon,
@@ -42,8 +41,7 @@ const SearchBar = () => {
       : setClassEl(event.currentTarget);
 
   const handleMenuClose = (option, type) => {
-    if (type === "trip")
-      setSelectedOption(option);
+    if (type === "trip") setSelectedOption(option);
     else setSelectedClass(option);
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
   };
@@ -130,7 +128,9 @@ const SearchBar = () => {
               variant="outlined"
               placeholder="Where from?"
               InputProps={{
-                startAdornment: <FlightTakeoffIcon sx={{ mr: 1 }} />,
+                startAdornment: (
+                  <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
+                ),
               }}
               sx={{
                 bgcolor: "#202124",
@@ -149,7 +149,9 @@ const SearchBar = () => {
               fullWidth
               variant="outlined"
               placeholder="Where to?"
-              InputProps={{ startAdornment: <FlightLandIcon sx={{ mr: 1 }} /> }}
+              InputProps={{
+                startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
+              }}
               sx={{
                 bgcolor: "#202124",
                 borderRadius: 1,
@@ -157,26 +159,6 @@ const SearchBar = () => {
               }}
             />
           </Grid2>
-        </Grid2>
-
-        <Grid2 container spacing={1} alignItems="center" mt={1}>
-          {["Departure", "Return"].map((label, index) => (
-            <Grid2 item xs={6} key={index}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                placeholder={label}
-                InputProps={{
-                  startAdornment: <CalendarTodayIcon sx={{ mr: 1 }} />,
-                }}
-                sx={{
-                  bgcolor: "#202124",
-                  borderRadius: 1,
-                  input: { color: "#fff" },
-                }}
-              />
-            </Grid2>
-          ))}
         </Grid2>
 
         <Box display="flex" justifyContent="center" mt={2}>
