@@ -2,6 +2,7 @@ import { Grid2, Typography, useTheme } from "@mui/material";
 import FlightLight from "../assets/images/flights_light.svg";
 import FlightDark from "../assets/images/flights_dark.svg";
 import SearchBar from "../components/Home/SearchBar";
+import NearByAirports from "../components/Home/ NearByAirports";
 
 const Home = () => {
   const darkMode = true;
@@ -39,6 +40,9 @@ const Home = () => {
       </Grid2>
       <Grid2 size={{ xs: 12, md: 5 }}>
         <SearchBar />
+      </Grid2>
+      <Grid2 size={{ xs: 12, md: 5 }}>
+        <NearByAirports />
       </Grid2>
     </Grid2>
   );
