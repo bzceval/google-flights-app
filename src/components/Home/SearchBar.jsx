@@ -14,12 +14,12 @@ import {
   Search as SearchIcon,
   FiberManualRecordOutlined as FiberManualRecordOutlinedIcon,
   LocationOnOutlined as LocationOnOutlinedIcon,
-  People as PeopleIcon,
   ExpandMore as ExpandMoreIcon,
   SyncAlt as SyncAltIcon,
   TrendingFlat as TrendingFlatIcon,
   MultipleStop as MultipleStopIcon,
 } from "@mui/icons-material";
+import PassengerSelector from "./PassengerSelector";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
@@ -92,9 +92,7 @@ const SearchBar = () => {
             </Menu>
           </Grid2>
           <Grid2 item>
-            <Button sx={{ color: "#fff" }} startIcon={<PeopleIcon />}>
-              1
-            </Button>
+            <PassengerSelector />
           </Grid2>
           <Grid2 item>
             <Button
