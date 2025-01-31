@@ -195,7 +195,7 @@ const SearchBar = () => {
       </Grid>
 
       <Grid container justifyContent="center">
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={4} md={2} lg={1.5}>
           <Button
             variant="contained"
             sx={{
