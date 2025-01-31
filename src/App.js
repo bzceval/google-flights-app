@@ -11,7 +11,10 @@ function App() {
     [darkMode]
   );
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{ backgroundColor: theme.palette.mainColors.default }}
+    >
       <ThemeProvider theme={theme}>
         <AppRouter />
         <CssBaseline />
