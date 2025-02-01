@@ -47,7 +47,7 @@ const NearByAirports = () => {
       : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   return (
-    <Box sx={{ my: 6 }}>
+    <Box sx={{ my: 8 }}>
       <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
         Find cheap flights from United Kingdom to anywhere
       </Typography>
