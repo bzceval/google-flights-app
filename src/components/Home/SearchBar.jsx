@@ -179,8 +179,11 @@ const SearchBar = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={5}>
-          <Departure />
-          <RoundTrip />
+          {selectedOption.label === "Round trip" ? (
+            <RoundTrip />
+          ) : (
+            <Departure />
+          )}
         </Grid>
       </Grid>
 
