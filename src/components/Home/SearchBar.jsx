@@ -55,11 +55,11 @@ const SearchBar = () => {
 
   const handleAddFlight = () => {
     if (flights.length < 5) {
-      setFlights([...flights, {}]); // Yeni uçuş ekle
+      setFlights([...flights, {}]);
     }
   };
 
-  const handleWhereToChange = async (e) => {
+  const handleWhereChange = async (e) => {
     const value = e.target.value
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
@@ -181,6 +181,7 @@ const SearchBar = () => {
                   color: "#fff",
                   input: { color: "#fff" },
                 }}
+                onChange={handleWhereChange}
               />
             </Grid>
             <Grid
@@ -207,7 +208,7 @@ const SearchBar = () => {
                   color: "#fff",
                   input: { color: "#fff" },
                 }}
-                onChange={handleWhereToChange}
+                onChange={handleWhereChange}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={5}>
