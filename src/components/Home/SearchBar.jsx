@@ -22,7 +22,7 @@ import {
 } from "@mui/icons-material";
 import PassengerSelector from "./PassengerSelector";
 import RoundTrip from "./SearchBarComp/RoundTrip";
-import OneWay from "./SearchBarComp/OneWay";
+import Departure from "./SearchBarComp/Departure";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
@@ -179,7 +179,7 @@ const SearchBar = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={5}>
-          <OneWay />
+          <Departure />
           <RoundTrip />
         </Grid>
       </Grid>

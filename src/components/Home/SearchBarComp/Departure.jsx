@@ -1,7 +1,11 @@
-import { Box, TextField, useTheme } from "@mui/material";
-import { CalendarMonthOutlined as CalendarMonthOutlinedIcon } from "@mui/icons-material";
+import { Box, IconButton, TextField, useTheme } from "@mui/material";
+import {
+  CalendarMonthOutlined as CalendarMonthOutlinedIcon,
+  KeyboardArrowLeft as KeyboardArrowLeftIcon,
+  KeyboardArrowRight as KeyboardArrowRightIcon,
+} from "@mui/icons-material";
 
-const OneWay = () => {
+const Departure = () => {
   const theme = useTheme();
   return (
     <Box
@@ -21,6 +25,16 @@ const OneWay = () => {
         placeholder="Departure"
         InputProps={{
           startAdornment: <CalendarMonthOutlinedIcon sx={{ mr: 1 }} />,
+          endAdornment: (
+            <Box display={"flex"}>
+              <IconButton>
+                <KeyboardArrowLeftIcon />
+              </IconButton>
+              <IconButton>
+                <KeyboardArrowRightIcon />
+              </IconButton>
+            </Box>
+          ),
         }}
         sx={{
           borderRadius: 1,
@@ -42,4 +56,4 @@ const OneWay = () => {
   );
 };
 
-export default OneWay;
+export default Departure;
