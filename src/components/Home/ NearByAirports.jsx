@@ -71,9 +71,7 @@ const NearByAirports = () => {
     if (position) {
       fetchData();
     }
-  }, [fetchData, position]);
-
-  console.log(nearAirports.data);
+  }, [fetchData, position]); 
 
   const tileLayerUrl =
     theme.palette.mode === "dark"
@@ -102,8 +100,7 @@ const NearByAirports = () => {
               paddingTop: "17px",
               paddingBottom: "17px",
               cursor: "pointer",
-              fontSize: "14px",
-              letterSpacing: "0.25px",
+              fontSize: "14px", 
               whiteSpace: "nowrap",
               borderRadius: "20px",
               ":hover": {
