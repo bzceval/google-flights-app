@@ -12,7 +12,6 @@ const Home = () => {
       <LandingPage darkMode={darkMode} />
       <SearchBar />
       <NearByAirports />
-      <FlightsList />
     </Container>
   );
 };

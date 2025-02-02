@@ -3,7 +3,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, Button, Grid2, Paper, Stack, useTheme } from "@mui/material";
+import { Box, Container, Grid2, Stack, useTheme } from "@mui/material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -37,7 +37,7 @@ const FlightsList = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Paper>
+    <Container maxWidth="lg">
       <Accordion
         expanded={expanded}
         onChange={() => setExpanded((prev) => !prev)}
@@ -57,7 +57,7 @@ const FlightsList = () => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                width: "100%", 
+                width: "100%",
               }}
             >
               <Box>
@@ -80,7 +80,7 @@ const FlightsList = () => {
                   primary="56kg CO2e"
                   secondary="Avg emissions"
                 />
-                <Button variant="outlined">flights</Button>
+                {/* <Button variant="outlined">flights</Button> */}
                 <Typography>$42</Typography>
               </Box>
             </Box>
@@ -221,7 +221,7 @@ const FlightsList = () => {
           </Grid2>
         </AccordionDetails>
       </Accordion>
-    </Paper>
+    </Container>
   );
 };
 

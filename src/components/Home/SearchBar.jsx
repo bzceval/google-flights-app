@@ -18,6 +18,7 @@ import {
 import PassengerSelector from "./PassengerSelector";
 import { getSearchAirports, getSearchFlights } from "../../services/api";
 import SearchInput from "./SearchInput";
+import { useNavigate } from "react-router-dom";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
@@ -55,6 +56,7 @@ const SearchBar = () => {
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
 
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event, type) =>
     type === "trip"
@@ -147,12 +149,12 @@ const SearchBar = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await getSearchFlights(selectFlight);
-      console.log(response);
+      // const response = await getSearchFlights(selectFlight);
+      navigate("/flights");
     } catch (error) {
       console.error("Uçuşlar alınırken hata oluştu:", error);
     }
-  }, [selectFlight]);
+  }, [navigate]);
 
   return (
     <Paper
