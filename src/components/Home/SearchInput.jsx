@@ -24,13 +24,12 @@ export const InputAutoComp = ({
   return (
     <Autocomplete
       open={openAutocomplete === type}
-      options={
-        searchAirports?.[type]
-          ?.map((airport) => airport.presentation?.suggestionTitle)
-          .flat() || []
-      }
-      getOptionLabel={(option) => option || ""}
+      options={searchAirports?.[type] || []}
+      getOptionLabel={(option) => option.presentation?.suggestionTitle || ""}
       onInputChange={(e) => handleWhereChange(e, type)}
+      onChange={(event, value) => {
+        console.log("Seçilen veri:", value);
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -76,7 +75,7 @@ const SearchInput = ({
           justifyContent="center"
           key={index}
         >
-          <Grid2 item xs={12} sm={7} md={7}>
+          <Grid2 item={"true"} xs={12} sm={7} md={7}>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={1}
@@ -100,7 +99,7 @@ const SearchInput = ({
               />
             </Stack>
           </Grid2>
-          <Grid2 item xs={12} sm={5} md={5}>
+          <Grid2 item={"true"} xs={12} sm={5} md={5}>
             {selectedOption.label === "Round trip" ? (
               <RoundTrip />
             ) : (
@@ -112,7 +111,7 @@ const SearchInput = ({
 
       {selectedOption.label === "Multi City" && flights.length < 5 && (
         <Grid2 container justifyContent="center" my={3}>
-          <Grid2 item xs={6} sm={4} md={3} lg={3}>
+          <Grid2 item={"true"} xs={6} sm={4} md={3} lg={3}>
             <Button
               variant="contained"
               sx={{

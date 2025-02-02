@@ -59,30 +59,38 @@ const SearchBar = () => {
   };
 
   const handleWhereChange = async (e, where) => {
-    const value = e.target.value
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-    if (value.length >= 3) {
-      setOpenAutocomplete(where);
-      try {
-        const response = await getSearchAirports(value);
-        const airports = response?.data?.data || [];
+    const value = e.target.value;
+
+    // Ensure value is a string before calling normalize
+    if (typeof value === "string") {
+      const normalizedValue = value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
+      if (normalizedValue.length >= 1) {
+        setOpenAutocomplete(where);
+        try {
+          const response = await getSearchAirports(normalizedValue);
+          const airports = response?.data?.data || [];
+          setSearchAirports((prev) => ({
+            ...prev,
+            [where]: airports,
+          }));
+        } catch (error) {
+          console.error("Error fetching airports:", error);
+        }
+      } else {
+        setOpenAutocomplete(null);
         setSearchAirports((prev) => ({
           ...prev,
-          [where]: airports,
+          isMenuOpen: false,
         }));
-      } catch (error) {
-        console.error("Error fetching airports:", error);
       }
-    } else {
-      setOpenAutocomplete(null);
-      setSearchAirports((prev) => ({
-        ...prev,
-        isMenuOpen: false,
-      }));
     }
   };
+
+  console.log({ searchAirports });
 
   return (
     <Paper
@@ -97,7 +105,7 @@ const SearchBar = () => {
     >
       {/* HEADER */}
       <Grid2 container spacing={2} alignItems="center">
-        <Grid2 item>
+        <Grid2 item={"true"}>
           <Button
             onClick={(e) => handleMenuOpen(e, "trip")}
             endIcon={<ExpandMoreIcon />}
@@ -137,10 +145,10 @@ const SearchBar = () => {
             ))}
           </Menu>
         </Grid2>
-        <Grid2 item>
+        <Grid2 item={"true"}>
           <PassengerSelector />
         </Grid2>
-        <Grid2 item>
+        <Grid2 item={"true"}>
           <Button
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
@@ -173,7 +181,7 @@ const SearchBar = () => {
       </Grid2>
 
       {/* INPUTS */}
-      <Grid2 container spacing={.5} alignItems="center">
+      <Grid2 container spacing={0.5} alignItems="center">
         <SearchInput
           flights={flights}
           openAutocomplete={openAutocomplete}
@@ -185,7 +193,7 @@ const SearchBar = () => {
       </Grid2>
 
       <Grid2 container justifyContent="center">
-        <Grid2 item size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }}>
+        <Grid2 item={"true"} size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }}>
           <Button
             variant="contained"
             sx={{
