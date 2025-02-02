@@ -42,7 +42,10 @@ const SearchBar = () => {
     destinationSky: [],
     cabinClass: "economy",
     oneDate: null,
-    roundDate: null,
+    roundDate: {
+      departure: null,
+      return: null,
+    },
   });
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
 
@@ -115,11 +118,26 @@ const SearchBar = () => {
     }
   };
 
-  const handleDate = (date) => {
-    setSelectFlight((prevState) => ({
-      ...prevState,
-      oneDate: date,
-    }));
+  const handleDate = (date, type) => {
+    if (type === "oneDate") {
+      setSelectFlight((prevState) => ({
+        ...prevState,
+        oneDate: date,
+        roundDate: {
+          departure: null,
+          return: null,
+        },
+      }));
+    } else {
+      setSelectFlight((prevState) => ({
+        ...prevState,
+        roundDate: {
+          departure: date.departure,
+          return: date.return,
+        },
+        oneDate: null,
+      }));
+    }
   };
 
   console.log({ selectFlight });

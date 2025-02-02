@@ -12,7 +12,7 @@ const Departure = ({ onDate }) => {
   const handleDateChange = (newValue) => {
     setDepartureDate(newValue);
     if (newValue) {
-      onDate(dayjs(newValue).format("YYYY-MM-DD"));
+      onDate(dayjs(newValue).format("YYYY-MM-DD"), "oneDate");
     }
   };
 

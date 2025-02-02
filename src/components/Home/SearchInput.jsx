@@ -106,9 +106,9 @@ const SearchInput = ({
           </Grid2>
           <Grid2 item={"true"} xs={12} sm={5} md={5}>
             {selectedOption.label === "Round trip" ? (
-              <RoundTrip />
+              <RoundTrip onDate={onDate} />
             ) : (
-              <Departure onDate={onDate}/>
+              <Departure onDate={onDate} />
             )}
           </Grid2>
         </Grid2>
