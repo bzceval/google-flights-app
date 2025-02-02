@@ -22,3 +22,9 @@ export const getSearchAirports = async (query) => {
     `api/v1/flights/searchAirport?query=${query}&locale=${defaultLocale}`
   );
 };
+
+export const getSearchFlights = async (params) => {
+  return await Api.get(
+    `api/v2/flights/searchFlights?originSkyId=LOND&destinationSkyId=NYCA&originEntityId=27544008&destinationEntityId=27537542&cabinClass=economy&adults=1&sortBy=best&currency=USD&market=${defaultLocale}&countryCode=US&date=2025-05-05`
+  );
+}; 

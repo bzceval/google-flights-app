@@ -7,9 +7,9 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Grid,
   useTheme,
   Autocomplete,
+  Grid2,
 } from "@mui/material";
 import {
   SwapHoriz as SwapHorizIcon,
@@ -71,7 +71,7 @@ const SearchBar = () => {
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
     if (value.length >= 3) {
-      setOpenAutocomplete(where);  
+      setOpenAutocomplete(where);
       try {
         const response = await getSearchAirports(value);
         const airports = response?.data?.data || [];
@@ -83,7 +83,7 @@ const SearchBar = () => {
         console.error("Error fetching airports:", error);
       }
     } else {
-      setOpenAutocomplete(null); 
+      setOpenAutocomplete(null);
       setSearchAirports((prev) => ({
         ...prev,
         isMenuOpen: false,
@@ -102,8 +102,8 @@ const SearchBar = () => {
           "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",
       }}
     >
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>
+      <Grid2 container spacing={2} alignItems="center">
+        <Grid2 item>
           <Button
             onClick={(e) => handleMenuOpen(e, "trip")}
             endIcon={<ExpandMoreIcon />}
@@ -142,11 +142,11 @@ const SearchBar = () => {
               </MenuItem>
             ))}
           </Menu>
-        </Grid>
-        <Grid item>
+        </Grid2>
+        <Grid2 item>
           <PassengerSelector />
-        </Grid>
-        <Grid item>
+        </Grid2>
+        <Grid2 item>
           <Button
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
@@ -175,13 +175,13 @@ const SearchBar = () => {
               </MenuItem>
             ))}
           </Menu>
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
 
-      <Grid container spacing={1} mt={2} mb={4} alignItems="center">
+      <Grid2 container spacing={1} mt={2} mb={4} alignItems="center">
         {flights.map((_, index) => (
           <React.Fragment key={index}>
-            <Grid item xs={12} sm={5} md={3}>
+            <Grid2 item xs={12} sm={5} md={3}>
               <Autocomplete
                 open={openAutocomplete === "whereFrom"}
                 options={
@@ -211,19 +211,17 @@ const SearchBar = () => {
                   />
                 )}
               />
-            </Grid>
-            <Grid
+            </Grid2>
+            <Grid2
               item
-              xs={12}
-              sm={2}
-              md={"auto"}
+              size={{ xs: 12, sm: 2, md: "auto" }}
               sx={{ display: "flex", justifyContent: "center" }}
             >
               <IconButton sx={{ color: "#fff" }}>
                 <SwapHorizIcon />
               </IconButton>
-            </Grid>
-            <Grid item xs={12} sm={5} md={3}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 5, md: 3 }}>
               <Autocomplete
                 open={openAutocomplete === "whereTo"}
                 options={
@@ -251,18 +249,18 @@ const SearchBar = () => {
                   />
                 )}
               />
-            </Grid>
-            <Grid item xs={12} sm={6} md={5}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 6, md: 5 }}>
               {selectedOption.label === "Round trip" ? (
                 <RoundTrip />
               ) : (
                 <Departure />
               )}
-            </Grid>
+            </Grid2>
           </React.Fragment>
         ))}
         {selectedOption.label === "Multi City" && flights.length < 5 && (
-          <Grid item my={3} xs={6} sm={4} md={2} lg={1.5}>
+          <Grid2 item size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }} my={3}>
             <Button
               variant="contained"
               sx={{
@@ -276,12 +274,12 @@ const SearchBar = () => {
             >
               Add Flight
             </Button>
-          </Grid>
+          </Grid2>
         )}
-      </Grid>
+      </Grid2>
 
-      <Grid container justifyContent="center">
-        <Grid item xs={6} sm={4} md={2} lg={1.5}>
+      <Grid2 container justifyContent="center">
+        <Grid2 item size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }}>
           <Button
             variant="contained"
             sx={{
@@ -295,8 +293,8 @@ const SearchBar = () => {
           >
             Search
           </Button>
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </Paper>
   );
 };
