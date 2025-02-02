@@ -11,6 +11,7 @@ const Footer = () => {
         py: 5,
         gap: 2,
         textAlign: "center",
+        whiteSpace: "nowrap",
       }}
     >
       <Box
@@ -22,6 +23,9 @@ const Footer = () => {
           gap: 2,
           justifyContent: "center",
           alignItems: "center",
+          whiteSpace: "nowrap",
+          flexWrap: "wrap",
+          color: theme.palette.mainColors.mainBlue,
         }}
       >
         <Link href="/#">About</Link>
@@ -43,6 +47,9 @@ const Footer = () => {
           gap: 2,
           justifyContent: "center",
           alignItems: "center",
+          whiteSpace: "nowrap",
+          flexWrap: "wrap",
+          color: theme.palette.mainColors.mainBlue,
         }}
       >
         <Link href="/#">International sites</Link>

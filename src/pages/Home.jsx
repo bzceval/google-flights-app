@@ -38,10 +38,10 @@ const Home = () => {
           Flights
         </Typography>
       </Grid2>
-      <Grid2 size={{ xs: 12, md: 5 }}>
+      <Grid2 size={{ xs: 10, md: 5 }}>
         <SearchBar />
       </Grid2>
-      <Grid2 size={{ xs: 12, md: 5 }}>
+      <Grid2 size={{ xs: 10,  md: 5 }}>
         <NearByAirports />
       </Grid2>
     </Grid2>

@@ -9,6 +9,8 @@ export const lightTheme = createTheme({
       secondary: "#fff",
       secondaryText: "#70757a",
       btnColor: "#90caf9",
+      border: "#dadce0",
+      mainBlue: "#1a73e8",
     },
   },
 });
@@ -22,6 +24,8 @@ export const darkTheme = createTheme({
       secondary: "#3a3b3f",
       secondaryText: "#9aa0a6",
       btnColor: "#90caf9",
+      border: "#5f6368",
+      mainBlue: "#8ab4f8",
     },
   },
 });
