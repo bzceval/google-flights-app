@@ -9,6 +9,7 @@ import {
   MenuItem,
   Grid,
   useTheme,
+  Autocomplete,
 } from "@mui/material";
 import {
   SwapHoriz as SwapHorizIcon,
@@ -39,7 +40,12 @@ const SearchBar = () => {
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
   const [selectedClass, setSelectedClass] = useState("Economy");
   const [flights, setFlights] = useState([{}]);
-  const [searchAirports, setSearchAirports] = useState([{}]);
+  const [searchAirports, setSearchAirports] = useState({
+    whereTo: [],
+    whereFrom: [],
+  });
+  const [openAutocomplete, setOpenAutocomplete] = useState(null);
+
   const theme = useTheme();
 
   const handleMenuOpen = (event, type) =>
@@ -59,22 +65,31 @@ const SearchBar = () => {
     }
   };
 
-  const handleWhereChange = async (e) => {
+  const handleWhereChange = async (e, where) => {
     const value = e.target.value
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
     if (value.length >= 3) {
+      setOpenAutocomplete(where);  
       try {
         const response = await getSearchAirports(value);
-        setSearchAirports(response?.data?.data);
+        const airports = response?.data?.data || [];
+        setSearchAirports((prev) => ({
+          ...prev,
+          [where]: airports,
+        }));
       } catch (error) {
         console.error("Error fetching airports:", error);
       }
+    } else {
+      setOpenAutocomplete(null); 
+      setSearchAirports((prev) => ({
+        ...prev,
+        isMenuOpen: false,
+      }));
     }
   };
-
-  console.log({ searchAirports });
 
   return (
     <Paper
@@ -167,21 +182,34 @@ const SearchBar = () => {
         {flights.map((_, index) => (
           <React.Fragment key={index}>
             <Grid item xs={12} sm={5} md={3}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                placeholder="Where from?"
-                InputProps={{
-                  startAdornment: (
-                    <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
-                  ),
-                }}
-                sx={{
-                  borderRadius: 1,
-                  color: "#fff",
-                  input: { color: "#fff" },
-                }}
-                onChange={handleWhereChange}
+              <Autocomplete
+                open={openAutocomplete === "whereFrom"}
+                options={
+                  searchAirports?.whereFrom
+                    ?.map((airport) => airport.presentation?.suggestionTitle)
+                    .flat() || []
+                }
+                getOptionLabel={(option) => option || ""}
+                onInputChange={(e) => handleWhereChange(e, "whereFrom")}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Where from?"
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
+                      ),
+                    }}
+                    sx={{
+                      borderRadius: 1,
+                      color: "#fff",
+                      input: { color: "#fff" },
+                    }}
+                  />
+                )}
               />
             </Grid>
             <Grid
@@ -196,19 +224,32 @@ const SearchBar = () => {
               </IconButton>
             </Grid>
             <Grid item xs={12} sm={5} md={3}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                placeholder="Where to?"
-                InputProps={{
-                  startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
-                }}
-                sx={{
-                  borderRadius: 1,
-                  color: "#fff",
-                  input: { color: "#fff" },
-                }}
-                onChange={handleWhereChange}
+              <Autocomplete
+                open={openAutocomplete === "whereTo"}
+                options={
+                  searchAirports?.whereTo
+                    ?.map((airport) => airport.presentation?.suggestionTitle)
+                    .flat() || []
+                }
+                getOptionLabel={(option) => option || ""}
+                onInputChange={(e) => handleWhereChange(e, "whereTo")}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Where to?"
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
+                    }}
+                    sx={{
+                      borderRadius: 1,
+                      color: "#fff",
+                      input: { color: "#fff" },
+                    }}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={5}>
