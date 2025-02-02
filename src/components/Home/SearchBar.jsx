@@ -28,7 +28,7 @@ const menuOptions = [
 
 const classOptions = ["Economy", "Premium Economy", "Business", "First"];
 
-const SearchBar = () => {
+const SearchBar = ({ bg }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
@@ -149,19 +149,21 @@ const SearchBar = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      // const response = await getSearchFlights(selectFlight);
-      navigate("/flights");
+      const response = await getSearchFlights(selectFlight);
+      console.log(response.data);
+
+      navigate("/flights", { state: { flightData: response.data } });
     } catch (error) {
       console.error("Uçuşlar alınırken hata oluştu:", error);
     }
-  }, [navigate]);
+  }, [navigate, selectFlight]);
 
   return (
     <Paper
       sx={{
         padding: "10px 30px",
         position: "relative",
-        backgroundColor: theme.palette.mainColors.secondary,
+        backgroundColor: bg,
         border: "none",
         boxShadow:
           "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",

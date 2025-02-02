@@ -42,7 +42,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <IconButton sx={{ "&:hover": { backgroundColor: "transparent" } }}>
-            <Link to="https://www.google.com/">
+            <Link to="/">
               <img
                 src={darkMode ? GoogleDarkIcon : GoogleLightIcon}
                 alt="Google Logo"
