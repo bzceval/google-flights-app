@@ -21,8 +21,8 @@ import {
   MultipleStop as MultipleStopIcon,
 } from "@mui/icons-material";
 import PassengerSelector from "./PassengerSelector";
-import RoundTrip from "./SearchBarComp/RoundTrip";
-import Departure from "./SearchBarComp/Departure";
+import RoundTrip from "./DateComp/RoundTrip";
+import Departure from "./DateComp/Departure";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
