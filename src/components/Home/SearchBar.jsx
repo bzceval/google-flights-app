@@ -37,6 +37,11 @@ const SearchBar = () => {
     whereTo: [],
     whereFrom: [],
   });
+  const [selectFlight, setSelectFlight] = useState({
+    originSky: [],
+    destinationSky: [],
+    cabinClass: "",
+  });
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
 
   const theme = useTheme();
@@ -47,8 +52,16 @@ const SearchBar = () => {
       : setClassEl(event.currentTarget);
 
   const handleMenuClose = (option, type) => {
-    if (type === "trip") setSelectedOption(option);
-    else setSelectedClass(option);
+    if (type === "trip") {
+      setSelectedOption(option);
+    } else if (type === "class") {
+      const formattedClass = option.toLowerCase().replace(/\s+/g, "-");
+      setSelectedClass(option);
+      setSelectFlight((prevState) => ({
+        ...prevState,
+        cabinClass: formattedClass,
+      }));
+    }
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
   };
 
@@ -58,10 +71,20 @@ const SearchBar = () => {
     }
   };
 
+  const handleSelectFlight = (params, type) => {
+    setSelectFlight((prevState) => {
+      const newState = { ...prevState };
+      if (type === "whereFrom") {
+        newState.originSky = [...newState.originSky, params];
+      } else if (type === "whereTo") {
+        newState.destinationSky = [...newState.destinationSky, params];
+      }
+      return newState;
+    });
+  };
+
   const handleWhereChange = async (e, where) => {
     const value = e.target.value;
-
-    // Ensure value is a string before calling normalize
     if (typeof value === "string") {
       const normalizedValue = value
         .normalize("NFD")
@@ -90,7 +113,7 @@ const SearchBar = () => {
     }
   };
 
-  console.log({ searchAirports });
+  console.log({ selectFlight });
 
   return (
     <Paper
@@ -189,6 +212,7 @@ const SearchBar = () => {
           selectedOption={selectedOption}
           handleWhereChange={handleWhereChange}
           handleAddFlight={handleAddFlight}
+          onSelectFlight={handleSelectFlight}
         />
       </Grid2>
 

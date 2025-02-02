@@ -20,6 +20,7 @@ export const InputAutoComp = ({
   openAutocomplete,
   searchAirports,
   handleWhereChange,
+  onSelectFlight,
 }) => {
   return (
     <Autocomplete
@@ -28,7 +29,7 @@ export const InputAutoComp = ({
       getOptionLabel={(option) => option.presentation?.suggestionTitle || ""}
       onInputChange={(e) => handleWhereChange(e, type)}
       onChange={(event, value) => {
-        console.log("Seçilen veri:", value);
+        onSelectFlight(value, type);
       }}
       renderInput={(params) => (
         <TextField
@@ -64,6 +65,7 @@ const SearchInput = ({
   selectedOption,
   handleWhereChange,
   handleAddFlight,
+  onSelectFlight,
 }) => {
   return (
     <Stack>
@@ -87,6 +89,7 @@ const SearchInput = ({
                 openAutocomplete={openAutocomplete}
                 searchAirports={searchAirports}
                 handleWhereChange={handleWhereChange}
+                onSelectFlight={onSelectFlight}
               />
               <IconButton sx={{ color: "#fff" }}>
                 <SwapHorizIcon />
@@ -96,6 +99,7 @@ const SearchInput = ({
                 openAutocomplete={openAutocomplete}
                 searchAirports={searchAirports}
                 handleWhereChange={handleWhereChange}
+                onSelectFlight={onSelectFlight}
               />
             </Stack>
           </Grid2>
