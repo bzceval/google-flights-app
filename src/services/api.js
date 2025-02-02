@@ -16,3 +16,9 @@ export const getNearByAirports = async (position) => {
     `api/v1/flights/getNearByAirports?lat=${position[0]}&lng=${position[1]}&locale=${defaultLocale}`
   );
 };
+
+export const getSearchAirports = async (query) => {
+  return await Api.get(
+    `api/v1/flights/searchAirport?query=${query}&locale=${defaultLocale}`
+  );
+};
