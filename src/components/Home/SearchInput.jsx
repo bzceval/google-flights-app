@@ -21,6 +21,7 @@ export const InputAutoComp = ({
   searchAirports,
   handleWhereChange,
   onSelectFlight,
+  onCloseAutocomplete,
 }) => {
   return (
     <Autocomplete
@@ -30,6 +31,7 @@ export const InputAutoComp = ({
       onInputChange={(e) => handleWhereChange(e, type)}
       onChange={(event, value) => {
         onSelectFlight(value, type);
+        onCloseAutocomplete();
       }}
       renderInput={(params) => (
         <TextField
@@ -67,6 +69,7 @@ const SearchInput = ({
   handleAddFlight,
   onSelectFlight,
   onDate,
+  onCloseAutocomplete,
 }) => {
   return (
     <Stack>
@@ -91,6 +94,7 @@ const SearchInput = ({
                 searchAirports={searchAirports}
                 handleWhereChange={handleWhereChange}
                 onSelectFlight={onSelectFlight}
+                onCloseAutocomplete={onCloseAutocomplete}
               />
               <IconButton sx={{ color: "#fff" }}>
                 <SwapHorizIcon />
@@ -101,6 +105,7 @@ const SearchInput = ({
                 searchAirports={searchAirports}
                 handleWhereChange={handleWhereChange}
                 onSelectFlight={onSelectFlight}
+                onCloseAutocomplete={onCloseAutocomplete}
               />
             </Stack>
           </Grid2>

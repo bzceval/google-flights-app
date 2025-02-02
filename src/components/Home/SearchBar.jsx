@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Box,
   Paper,
@@ -16,7 +16,7 @@ import {
   MultipleStop as MultipleStopIcon,
 } from "@mui/icons-material";
 import PassengerSelector from "./PassengerSelector";
-import { getSearchAirports } from "../../services/api";
+import { getSearchAirports, getSearchFlights } from "../../services/api";
 import SearchInput from "./SearchInput";
 
 const menuOptions = [
@@ -46,6 +46,11 @@ const SearchBar = () => {
       departure: null,
       return: null,
     },
+    passenger: {
+      adults: 1,
+      childerens: 0,
+      infants: 0,
+    },
   });
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
 
@@ -60,7 +65,7 @@ const SearchBar = () => {
     if (type === "trip") {
       setSelectedOption(option);
     } else if (type === "class") {
-      const formattedClass = option.toLowerCase().replace(/\s+/g, "-");
+      const formattedClass = option.toLowerCase().replace(/\s+/g, "_");
       setSelectedClass(option);
       setSelectFlight((prevState) => ({
         ...prevState,
@@ -140,7 +145,14 @@ const SearchBar = () => {
     }
   };
 
-  console.log({ selectFlight });
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await getSearchFlights(selectFlight);
+      console.log(response);
+    } catch (error) {
+      console.error("Uçuşlar alınırken hata oluştu:", error);
+    }
+  }, [selectFlight]);
 
   return (
     <Paper
@@ -241,12 +253,14 @@ const SearchBar = () => {
           handleAddFlight={handleAddFlight}
           onSelectFlight={handleSelectFlight}
           onDate={handleDate}
+          onCloseAutocomplete={() => setOpenAutocomplete(null)}
         />
       </Grid2>
 
       <Grid2 container justifyContent="center">
         <Grid2 item={"true"} size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }}>
           <Button
+            onClick={() => fetchData()}
             variant="contained"
             sx={{
               bgcolor: "#8AB4F8",
