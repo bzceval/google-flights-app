@@ -37,7 +37,9 @@ const SearchBar = () => {
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
   const [selectedClass, setSelectedClass] = useState("Economy");
+  const [flights, setFlights] = useState([{}]); // Başlangıçta bir uçuş var
   const theme = useTheme();
+
   const handleMenuOpen = (event, type) =>
     type === "trip"
       ? setAnchorEl(event.currentTarget)
@@ -47,6 +49,12 @@ const SearchBar = () => {
     if (type === "trip") setSelectedOption(option);
     else setSelectedClass(option);
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
+  };
+
+  const handleAddFlight = () => {
+    if (flights.length < 5) {
+      setFlights([...flights, {}]); // Yeni uçuş ekle
+    }
   };
 
   return (
@@ -137,55 +145,61 @@ const SearchBar = () => {
       </Grid>
 
       <Grid container spacing={1} mt={2} mb={4} alignItems="center">
-        <Grid item xs={12} sm={5} md={3}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Where from?"
-            InputProps={{
-              startAdornment: <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />,
-            }}
-            sx={{
-              borderRadius: 1,
-              color: "#fff",
-              input: { color: "#fff" },
-            }}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={2}
-          md={"auto"}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          <IconButton sx={{ color: "#fff" }}>
-            <SwapHorizIcon />
-          </IconButton>
-        </Grid>
-        <Grid item xs={12} sm={5} md={3}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Where to?"
-            InputProps={{
-              startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
-            }}
-            sx={{
-              borderRadius: 1,
-              color: "#fff",
-              input: { color: "#fff" },
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={5}>
-          {selectedOption.label === "Round trip" ? (
-            <RoundTrip />
-          ) : (
-            <Departure />
-          )}
-        </Grid>
-        {selectedOption.label === "Multi City" && (
+        {flights.map((_, index) => (
+          <React.Fragment key={index}>
+            <Grid item xs={12} sm={5} md={3}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Where from?"
+                InputProps={{
+                  startAdornment: (
+                    <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
+                  ),
+                }}
+                sx={{
+                  borderRadius: 1,
+                  color: "#fff",
+                  input: { color: "#fff" },
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={2}
+              md={"auto"}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <IconButton sx={{ color: "#fff" }}>
+                <SwapHorizIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs={12} sm={5} md={3}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Where to?"
+                InputProps={{
+                  startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
+                }}
+                sx={{
+                  borderRadius: 1,
+                  color: "#fff",
+                  input: { color: "#fff" },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={5}>
+              {selectedOption.label === "Round trip" ? (
+                <RoundTrip />
+              ) : (
+                <Departure />
+              )}
+            </Grid>
+          </React.Fragment>
+        ))}
+        {selectedOption.label === "Multi City" && flights.length < 5 && (
           <Grid item my={3} xs={6} sm={4} md={2} lg={1.5}>
             <Button
               variant="contained"
@@ -196,6 +210,7 @@ const SearchBar = () => {
                 "&:hover": { bgcolor: "#AECBFA" },
               }}
               fullWidth
+              onClick={handleAddFlight}
             >
               Add Flight
             </Button>
