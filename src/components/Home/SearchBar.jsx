@@ -60,7 +60,10 @@ const SearchBar = () => {
   };
 
   const handleWhereToChange = async (e) => {
-    const value = e.target.value.toLowerCase();
+    const value = e.target.value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
     if (value.length >= 3) {
       try {
         const response = await getSearchAirports(value);
@@ -70,6 +73,7 @@ const SearchBar = () => {
       }
     }
   };
+
   console.log({ searchAirports });
 
   return (
