@@ -6,7 +6,8 @@ import {
   Box,
   Typography,
   useTheme,
-  Chip,
+  Chip, 
+  Grid2,
 } from "@mui/material";
 import L from "leaflet";
 
@@ -71,66 +72,79 @@ const NearByAirports = () => {
     if (position) {
       fetchData();
     }
-  }, [fetchData, position]); 
+  }, [fetchData, position]);
 
   const tileLayerUrl =
     theme.palette.mode === "dark"
       ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
-  return loading ? (
-    <Box sx={{ textAlign: "center", mt: 2 }}>
-      <CircularProgress />
-    </Box>
-  ) : (
-    <Box sx={{ my: 8 }}>
-      <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-        Find cheap flights from{" "}
-        {nearAirports?.data?.current?.presentation?.subtitle} to anywhere
-      </Typography>
-      <Box sx={{ my: 2, gap: 1, display: "flex", flexWrap: "wrap" }}>
-        {nearAirports?.data?.nearby?.slice(0, 4).map((item, index) => (
-          <Chip
-            key={index}
-            label={item?.presentation?.suggestionTitle}
-            variant="outlined"
-            sx={{
-              fontWeight: "bold",
-              color: theme.palette.mainColors.text,
-              paddingTop: "17px",
-              paddingBottom: "17px",
-              cursor: "pointer",
-              fontSize: "14px", 
-              whiteSpace: "nowrap",
-              borderRadius: "20px",
-              ":hover": {
-                color: theme.palette.mainColors.mainBlue,
-              },
-            }}
-          />
-        ))}
-      </Box>
-
-      {position && (
-        <MapContainer
-          center={position}
-          zoom={5}
-          style={{ height: "250px", width: "100%", marginTop: "20px" }}
+  return (
+    <Grid2 container sx={{ my: 8, width: { xs: "100%",  md: "90%" } }}>
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            minHeight: "200px",
+            mt: 2,
+            p: 2,
+          }}
         >
-          <TileLayer
-            url={tileLayerUrl}
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">Carto</a>'
-          />
-          <Marker position={position} icon={customIcon}>
-            <Popup>
-              📍 Mevcut Konumun <br />
-              Latitude: {position[0]} <br />
-              Longitude: {position[1]}
-            </Popup>
-          </Marker>
-        </MapContainer>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+            Find cheap flights from{" "}
+            {nearAirports?.data?.current?.presentation?.subtitle} to anywhere
+          </Typography>
+          <Box sx={{ my: 2, gap: 1, display: "flex", flexWrap: "wrap" }}>
+            {nearAirports?.data?.nearby?.slice(0, 4).map((item, index) => (
+              <Chip
+                key={index}
+                label={item?.presentation?.suggestionTitle}
+                variant="outlined"
+                sx={{
+                  fontWeight: "bold",
+                  color: theme.palette.mainColors.text,
+                  paddingTop: "17px",
+                  paddingBottom: "17px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  whiteSpace: "nowrap",
+                  borderRadius: "20px",
+                  ":hover": {
+                    color: theme.palette.mainColors.mainBlue,
+                  },
+                }}
+              />
+            ))}
+          </Box>
+          {position && (
+            <MapContainer
+              center={position}
+              zoom={5}
+              style={{ height: "250px", width: "100%", marginTop: "20px" }}
+            >
+              <TileLayer
+                url={tileLayerUrl}
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">Carto</a>'
+              />
+              <Marker position={position} icon={customIcon}>
+                <Popup>
+                  📍 Mevcut Konumun <br />
+                  Latitude: {position[0]} <br />
+                  Longitude: {position[1]}
+                </Popup>
+              </Marker>
+            </MapContainer>
+          )}
+        </>
       )}
-    </Box>
+    </Grid2>
   );
 };
 

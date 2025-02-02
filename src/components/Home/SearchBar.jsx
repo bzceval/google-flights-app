@@ -3,28 +3,21 @@ import {
   Box,
   Paper,
   Button,
-  TextField,
-  IconButton,
   Menu,
   MenuItem,
   useTheme,
-  Autocomplete,
   Grid2,
 } from "@mui/material";
 import {
-  SwapHoriz as SwapHorizIcon,
-  Search as SearchIcon,
-  FiberManualRecordOutlined as FiberManualRecordOutlinedIcon,
-  LocationOnOutlined as LocationOnOutlinedIcon,
   ExpandMore as ExpandMoreIcon,
+  Search as SearchIcon,
   SyncAlt as SyncAltIcon,
   TrendingFlat as TrendingFlatIcon,
   MultipleStop as MultipleStopIcon,
 } from "@mui/icons-material";
 import PassengerSelector from "./PassengerSelector";
-import RoundTrip from "./DateComp/RoundTrip";
-import Departure from "./DateComp/Departure";
 import { getSearchAirports } from "../../services/api";
+import SearchInput from "./SearchInput";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
@@ -102,6 +95,7 @@ const SearchBar = () => {
           "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",
       }}
     >
+      {/* HEADER */}
       <Grid2 container spacing={2} alignItems="center">
         <Grid2 item>
           <Button
@@ -178,104 +172,16 @@ const SearchBar = () => {
         </Grid2>
       </Grid2>
 
-      <Grid2 container spacing={1} mt={2} mb={4} alignItems="center">
-        {flights.map((_, index) => (
-          <React.Fragment key={index}>
-            <Grid2 item xs={12} sm={5} md={3}>
-              <Autocomplete
-                open={openAutocomplete === "whereFrom"}
-                options={
-                  searchAirports?.whereFrom
-                    ?.map((airport) => airport.presentation?.suggestionTitle)
-                    .flat() || []
-                }
-                getOptionLabel={(option) => option || ""}
-                onInputChange={(e) => handleWhereChange(e, "whereFrom")}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Where from?"
-                    InputProps={{
-                      ...params.InputProps,
-                      startAdornment: (
-                        <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
-                      ),
-                    }}
-                    sx={{
-                      borderRadius: 1,
-                      color: "#fff",
-                      input: { color: "#fff" },
-                    }}
-                  />
-                )}
-              />
-            </Grid2>
-            <Grid2
-              item
-              size={{ xs: 12, sm: 2, md: "auto" }}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <IconButton sx={{ color: "#fff" }}>
-                <SwapHorizIcon />
-              </IconButton>
-            </Grid2>
-            <Grid2 item size={{ xs: 12, sm: 5, md: 3 }}>
-              <Autocomplete
-                open={openAutocomplete === "whereTo"}
-                options={
-                  searchAirports?.whereTo
-                    ?.map((airport) => airport.presentation?.suggestionTitle)
-                    .flat() || []
-                }
-                getOptionLabel={(option) => option || ""}
-                onInputChange={(e) => handleWhereChange(e, "whereTo")}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Where to?"
-                    InputProps={{
-                      ...params.InputProps,
-                      startAdornment: <LocationOnOutlinedIcon sx={{ mr: 1 }} />,
-                    }}
-                    sx={{
-                      borderRadius: 1,
-                      color: "#fff",
-                      input: { color: "#fff" },
-                    }}
-                  />
-                )}
-              />
-            </Grid2>
-            <Grid2 item size={{ xs: 12, sm: 6, md: 5 }}>
-              {selectedOption.label === "Round trip" ? (
-                <RoundTrip />
-              ) : (
-                <Departure />
-              )}
-            </Grid2>
-          </React.Fragment>
-        ))}
-        {selectedOption.label === "Multi City" && flights.length < 5 && (
-          <Grid2 item size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }} my={3}>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#8AB4F8",
-                borderRadius: "24px",
-                textTransform: "capitalize",
-                "&:hover": { bgcolor: "#AECBFA" },
-              }}
-              fullWidth
-              onClick={handleAddFlight}
-            >
-              Add Flight
-            </Button>
-          </Grid2>
-        )}
+      {/* INPUTS */}
+      <Grid2 container spacing={.5} alignItems="center">
+        <SearchInput
+          flights={flights}
+          openAutocomplete={openAutocomplete}
+          searchAirports={searchAirports}
+          selectedOption={selectedOption}
+          handleWhereChange={handleWhereChange}
+          handleAddFlight={handleAddFlight}
+        />
       </Grid2>
 
       <Grid2 container justifyContent="center">
@@ -289,7 +195,6 @@ const SearchBar = () => {
               "&:hover": { bgcolor: "#AECBFA" },
             }}
             startIcon={<SearchIcon />}
-            fullWidth
           >
             Search
           </Button>
