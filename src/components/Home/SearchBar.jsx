@@ -23,6 +23,7 @@ import {
 import PassengerSelector from "./PassengerSelector";
 import RoundTrip from "./DateComp/RoundTrip";
 import Departure from "./DateComp/Departure";
+import { getSearchAirports } from "../../services/api";
 
 const menuOptions = [
   { label: "Round trip", icon: <SyncAltIcon /> },
@@ -37,7 +38,8 @@ const SearchBar = () => {
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
   const [selectedClass, setSelectedClass] = useState("Economy");
-  const [flights, setFlights] = useState([{}]); // Başlangıçta bir uçuş var
+  const [flights, setFlights] = useState([{}]);
+  const [searchAirports, setSearchAirports] = useState([{}]);
   const theme = useTheme();
 
   const handleMenuOpen = (event, type) =>
@@ -56,6 +58,19 @@ const SearchBar = () => {
       setFlights([...flights, {}]); // Yeni uçuş ekle
     }
   };
+
+  const handleWhereToChange = async (e) => {
+    const value = e.target.value.toLowerCase();
+    if (value.length >= 3) {
+      try {
+        const response = await getSearchAirports(value);
+        setSearchAirports(response?.data?.data);
+      } catch (error) {
+        console.error("Error fetching airports:", error);
+      }
+    }
+  };
+  console.log({ searchAirports });
 
   return (
     <Paper
@@ -188,6 +203,7 @@ const SearchBar = () => {
                   color: "#fff",
                   input: { color: "#fff" },
                 }}
+                onChange={handleWhereToChange}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={5}>
