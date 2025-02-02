@@ -1,12 +1,21 @@
-import { Box, IconButton, TextField, useTheme } from "@mui/material";
-import {
-  CalendarMonthOutlined as CalendarMonthOutlinedIcon,
-  KeyboardArrowLeft as KeyboardArrowLeftIcon,
-  KeyboardArrowRight as KeyboardArrowRightIcon,
-} from "@mui/icons-material";
+import React, { useState } from "react";
+import { Box, IconButton, InputAdornment, useTheme } from "@mui/material";
+import { CalendarMonthOutlined as CalendarMonthOutlinedIcon } from "@mui/icons-material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs"; // Import dayjs
 
-const Departure = () => {
+const Departure = ({ onDate }) => {
   const theme = useTheme();
+  const [departureDate, setDepartureDate] = useState(null);
+
+  const handleDateChange = (newValue) => {
+    setDepartureDate(newValue);
+    if (newValue) {
+      onDate(dayjs(newValue).format("YYYY-MM-DD"));
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -19,39 +28,46 @@ const Departure = () => {
         transition: "border 0.3s ease, box-shadow 0.3s ease",
       }}
     >
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Departure"
-        InputProps={{
-          startAdornment: <CalendarMonthOutlinedIcon sx={{ mr: 1 }} />,
-          endAdornment: (
-            <Box display={"flex"}>
-              <IconButton>
-                <KeyboardArrowLeftIcon />
-              </IconButton>
-              <IconButton>
-                <KeyboardArrowRightIcon />
-              </IconButton>
-            </Box>
-          ),
-        }}
-        sx={{
-          borderRadius: 1,
-          color: "#fff",
-          input: { color: "#fff" },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent",
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.mainColors.primary,
-          },
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fff",
-          },
-          transition: "border 0.3s ease",
-        }}
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          value={departureDate}
+          onChange={handleDateChange}
+          minDate={dayjs()} // Correct way to disable past dates using dayjs
+          slotProps={{
+            textField: {
+              fullWidth: true,
+              variant: "outlined",
+              placeholder: "Departure",
+              sx: {
+                borderRadius: 1,
+                color: "#fff",
+                input: { color: "#fff" },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "transparent",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.mainColors.primary,
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#fff",
+                },
+                transition: "border 0.3s ease",
+              },
+              slotProps: {
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton>
+                        <CalendarMonthOutlinedIcon sx={{ mr: 1 }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              },
+            },
+          }}
+        />
+      </LocalizationProvider>
     </Box>
   );
 };

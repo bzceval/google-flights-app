@@ -40,7 +40,9 @@ const SearchBar = () => {
   const [selectFlight, setSelectFlight] = useState({
     originSky: [],
     destinationSky: [],
-    cabinClass: "",
+    cabinClass: "economy",
+    oneDate: null,
+    roundDate: null,
   });
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
 
@@ -111,6 +113,13 @@ const SearchBar = () => {
         }));
       }
     }
+  };
+
+  const handleDate = (date) => {
+    setSelectFlight((prevState) => ({
+      ...prevState,
+      oneDate: date,
+    }));
   };
 
   console.log({ selectFlight });
@@ -213,6 +222,7 @@ const SearchBar = () => {
           handleWhereChange={handleWhereChange}
           handleAddFlight={handleAddFlight}
           onSelectFlight={handleSelectFlight}
+          onDate={handleDate}
         />
       </Grid2>
 

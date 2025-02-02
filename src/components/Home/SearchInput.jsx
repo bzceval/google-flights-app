@@ -66,6 +66,7 @@ const SearchInput = ({
   handleWhereChange,
   handleAddFlight,
   onSelectFlight,
+  onDate,
 }) => {
   return (
     <Stack>
@@ -107,7 +108,7 @@ const SearchInput = ({
             {selectedOption.label === "Round trip" ? (
               <RoundTrip />
             ) : (
-              <Departure />
+              <Departure onDate={onDate}/>
             )}
           </Grid2>
         </Grid2>
