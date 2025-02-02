@@ -185,6 +185,22 @@ const SearchBar = () => {
             <Departure />
           )}
         </Grid>
+        {selectedOption.label === "Multi City" && (
+          <Grid item my={3} xs={6} sm={4} md={2} lg={1.5}>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#8AB4F8",
+                borderRadius: "24px",
+                textTransform: "capitalize",
+                "&:hover": { bgcolor: "#AECBFA" },
+              }}
+              fullWidth
+            >
+              Add Flight
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container justifyContent="center">
