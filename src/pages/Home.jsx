@@ -1,7 +1,8 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import SearchBar from "../components/Home/SearchBar";
 import NearByAirports from "../components/Home/ NearByAirports";
 import LandingPage from "../components/LandingPage";
+import FlightsList from "./FlightsList";
 
 const Home = () => {
   const darkMode = true;
@@ -9,14 +10,9 @@ const Home = () => {
   return (
     <Container maxWidth="lg">
       <LandingPage darkMode={darkMode} />
-      <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-        <SearchBar />
-      </Box>
-
-      {/* Nearby Airports */}
-      <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-        <NearByAirports />
-      </Box>
+      <SearchBar />
+      <NearByAirports />
+      <FlightsList />
     </Container>
   );
 };
