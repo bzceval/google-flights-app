@@ -9,11 +9,11 @@ export const Api = axios.create({
   //url: "https://sky-scrapper.p.rapidapi.com/api/v1/getLocale",
   baseURL: "https://sky-scrapper.p.rapidapi.com/",
   headers: {
-    "x-rapidapi-key": "b49a96939emshd6a29439bd048a6p1173ddjsn43f0ffcc8ef5",
+    "x-rapidapi-key": "d66c91e6efmshda3e85aed4ae18bp122c66jsnc20bb706a893",
     "x-rapidapi-host": "sky-scrapper.p.rapidapi.com",
   },
-});
-//d66c91e6efmshda3e85aed4ae18bp122c66jsnc20bb706a893
+}); 
+
 export const getNearByAirports = async (position) => {
   return await Api.get(
     `api/v1/flights/getNearByAirports?lat=${position[0]}&lng=${position[1]}&locale=${defaultLocale}`

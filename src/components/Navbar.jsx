@@ -5,8 +5,9 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Typography, 
+  Typography,
   Box,
+  Divider,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -31,8 +32,12 @@ const Navbar = () => {
     <AppBar
       position="static"
       sx={{
-        //backgroundColor: theme.palette.mainColors.default,
         boxShadow: "none",
+        "& .MuiToolbar-root": {
+          backgroundColor: "#202125",
+          width: "100%",
+          border: "5px sold red",
+        },
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -114,6 +119,7 @@ const Navbar = () => {
           </Tooltip>
         </Box>
       </Toolbar>
+      <Divider />
     </AppBar>
   );
 };

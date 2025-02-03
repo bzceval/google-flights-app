@@ -28,7 +28,7 @@ const FlightsMdDownComp = ({ item, formatDuration }) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             maxWidth: 400,
-            fontSize: "12px",
+            fontSize: { xs: "10px", sm: "12px" },
           }}
         >
           {item.legs[0].stopCount === 0
@@ -47,7 +47,9 @@ const FlightsMdDownComp = ({ item, formatDuration }) => {
           alignItems: "center",
         }}
       >
-        <Typography>{item.price.formatted}</Typography>
+        <Typography fontSize={{ xs: "10px", sm: "12px" }}>
+          {item.price.formatted}
+        </Typography>
       </Grid2>
     </Grid2>
   );

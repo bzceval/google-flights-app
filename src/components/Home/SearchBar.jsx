@@ -167,7 +167,7 @@ const SearchBar = ({ bg }) => {
       item="true"
       my={5}
       sx={{
-        padding: { xs: "10px", sm: "10px 30px" },
+        padding: { xs: "10px", sm: "10px 20px" },
         borderRadius: "8px",
         position: "relative",
         backgroundColor: { xs: "none", sm: bg },
@@ -186,6 +186,7 @@ const SearchBar = ({ bg }) => {
         alignItems="center"
         direction="row"
         wrap="nowrap"
+        my={1}
       >
         <Grid2 item="true" size={{ xs: 4, sm: "auto" }}>
           <Button

@@ -39,6 +39,7 @@ const FlightsList = () => {
   const location = useLocation();
   const flightData = location.state;
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isXsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleChange = useCallback(
     (index) => {
@@ -99,12 +100,13 @@ const FlightsList = () => {
                         gap: 3,
                       }}
                     >
-                      <ListItemComp
-                        img={false}
-                        primary="56kg CO2e"
-                        secondary="Avg emissions"
-                      />
-                      {/* <Button variant="outlined">flights</Button> */}
+                      {isXsDown && (
+                        <ListItemComp
+                          img={false}
+                          primary="56kg CO2e"
+                          secondary="Avg emissions"
+                        />
+                      )}
                       <Typography>{item.price.formatted}</Typography>
                     </Box>
                   </Box>

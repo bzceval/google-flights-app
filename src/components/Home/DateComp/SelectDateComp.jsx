@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { Box, IconButton, InputAdornment, useTheme } from "@mui/material";
-import { CalendarMonthOutlined as CalendarMonthOutlinedIcon } from "@mui/icons-material";
+import { Box, useTheme } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -26,25 +25,16 @@ const SelectDateComp = ({ onSelectDate }) => {
       placeholder: "Departure",
       sx: {
         borderRadius: 1,
-        color: "#fff",
-        input: { color: "#fff" },
+        color: theme.palette.mainColors.text,
+        input: { color: theme.palette.mainColors.text },
         "& .MuiOutlinedInput-notchedOutline": { borderColor: "transparent" },
         "&:hover .MuiOutlinedInput-notchedOutline": {
-          borderColor: theme.palette.mainColors.primary,
+          borderColor: theme.palette.mainColors.border,
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#fff",
+          borderColor: theme.palette.mainColors.border,
         },
         transition: "border 0.3s ease",
-      },
-      InputProps: {
-        startAdornment: (
-          <InputAdornment position="start">
-            <IconButton>
-              <CalendarMonthOutlinedIcon sx={{ mr: 1 }} />
-            </IconButton>
-          </InputAdornment>
-        ),
       },
     }),
     [theme]

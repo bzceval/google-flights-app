@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@mui/material/styles";
-import { Container, CssBaseline, responsiveFontSizes } from "@mui/material";
+import { CssBaseline, responsiveFontSizes } from "@mui/material";
 import { darkTheme, lightTheme } from "./theme";
 import { useMemo } from "react";
 import AppRouter from "./router/AppRouter";
@@ -16,13 +16,11 @@ function App() {
       className="App"
       style={{ backgroundColor: theme.palette.mainColors.default }}
     >
-      <Container maxWidth="lg">
-        <ThemeProvider theme={theme}>
-          <AppRouter />
-          <CssBaseline />
-          <ToastContainer />
-        </ThemeProvider>
-      </Container>
+      <ThemeProvider theme={theme}>
+        <AppRouter />
+        <CssBaseline />
+        <ToastContainer />
+      </ThemeProvider>
     </div>
   );
 }
