@@ -3,7 +3,14 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, Container, Grid2, Stack, useTheme } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid2,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useState } from "react";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
@@ -31,6 +38,7 @@ const FlightsList = () => {
   const [expanded, setExpanded] = useState([]);
   const location = useLocation();
   const flightData = location.state;
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleChange = (index) => {
     setExpanded((prev) =>
@@ -99,14 +107,17 @@ const FlightsList = () => {
                   </Box>
                 ) : (
                   <>
-                    {/* <FlightsMdUpComp
-                      item={item}
-                      formatDuration={formatDuration}
-                    /> */}
-                    <FlightsMdDownComp
-                      item={item}
-                      formatDuration={formatDuration}
-                    />
+                    {isMdUp ? (
+                      <FlightsMdUpComp
+                        item={item}
+                        formatDuration={formatDuration}
+                      />
+                    ) : (
+                      <FlightsMdDownComp
+                        item={item}
+                        formatDuration={formatDuration}
+                      />
+                    )}
                   </>
                 )}
               </AccordionSummary>
