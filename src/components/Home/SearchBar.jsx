@@ -119,19 +119,27 @@ const SearchBar = ({ bg }) => {
     }));
   };
 
+  const isFormValid = useCallback(() => {
+    return (
+      selectFlight.originSky.length > 0 &&
+      selectFlight.destinationSky.length > 0 &&
+      selectFlight.oneDate !== null &&
+      selectFlight.passenger.adults > 0
+    );
+  }, [selectFlight]);
+
   const fetchData = useCallback(async () => {
+    if (!isFormValid()) {
+      ErrorDialog("Please fill in the relevant inputs!");
+    }
     try {
       const response = await getSearchFlights(selectFlight);
-      if (response.data.status === 200) {
-        navigate("/flights", { state: { flightData: response?.data } });
-      } else {
-        ErrorDialog(response?.data?.message[0]?.date);
-      }
+      navigate("/flights", { state: { flightData: response.data } });
       console.log(response.data);
     } catch (error) {
       ErrorDialog(error);
     }
-  }, [navigate, selectFlight]);
+  }, [navigate, selectFlight, isFormValid]);
 
   return (
     <Grid2
