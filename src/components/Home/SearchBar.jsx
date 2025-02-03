@@ -21,8 +21,8 @@ import SearchInput from "./SearchInput";
 import { useNavigate } from "react-router-dom";
 
 const menuOptions = [
-  { label: "Round trip", icon: <SyncAltIcon /> },
   { label: "One way", icon: <TrendingFlatIcon /> },
+  { label: "Round trip", icon: <SyncAltIcon /> }, 
   { label: "Multi City", icon: <MultipleStopIcon /> },
 ];
 
@@ -43,14 +43,8 @@ const SearchBar = ({ bg }) => {
     destinationSky: [],
     cabinClass: "economy",
     oneDate: null,
-    roundDate: {
-      departure: null,
-      return: null,
-    },
     passenger: {
       adults: 1,
-      childerens: 0,
-      infants: 0,
     },
   });
   const [openAutocomplete, setOpenAutocomplete] = useState(null);
@@ -123,6 +117,13 @@ const SearchBar = ({ bg }) => {
         }));
       }
     }
+  };
+
+  const handleSelectAdults = (adults) => {
+    setSelectFlight((prevState) => ({
+      ...prevState,
+      adults: adults,
+    }));
   };
 
   const handleDate = (date, type) => {
@@ -212,7 +213,7 @@ const SearchBar = ({ bg }) => {
           </Menu>
         </Grid2>
         <Grid2 item={"true"}>
-          <PassengerSelector />
+          <PassengerSelector onSelectAdults={handleSelectAdults} />
         </Grid2>
         <Grid2 item={"true"}>
           <Button

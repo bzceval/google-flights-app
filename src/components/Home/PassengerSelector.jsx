@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Button,
   Menu,
@@ -12,7 +12,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
-const PassengerSelector = () => {
+const PassengerSelector = ({ onSelectAdults }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [passengers, setPassengers] = useState({
     adults: 1,
@@ -31,12 +31,51 @@ const PassengerSelector = () => {
   };
 
   const handleChange = (type, operation) => {
-    setPassengers((prev) => ({
-      ...prev,
-      [type]:
-        operation === "increase" ? prev[type] + 1 : Math.max(0, prev[type] - 1),
-    }));
+    setPassengers((prev) => {
+      const updatedPassengers = {
+        ...prev,
+        [type]:
+          operation === "increase"
+            ? prev[type] + 1
+            : Math.max(0, prev[type] - 1),
+      };
+      if (type === "adults") {
+        onSelectAdults(updatedPassengers.adults);
+      }
+
+      return updatedPassengers;
+    });
   };
+
+  const handleDone = () => {
+    onSelectAdults(passengers.adults);
+    handleClose();
+  };
+
+  const passengerTypes = useMemo(
+    () => [
+      { label: "Adults", subLabel: "", type: "adults", enabled: true },
+      {
+        label: "Children",
+        subLabel: "Aged 2–11",
+        type: "children",
+        enabled: false,
+      },
+      {
+        label: "Infants",
+        subLabel: "In seat",
+        type: "infantsSeat",
+        enabled: false,
+      },
+      {
+        label: "Infants",
+        subLabel: "On lap",
+        type: "infantsLap",
+        enabled: false,
+      },
+    ],
+    []
+  );
 
   return (
     <>
@@ -67,18 +106,21 @@ const PassengerSelector = () => {
           },
         }}
       >
-        {[
-          { label: "Adults", subLabel: "", type: "adults" },
-          { label: "Children", subLabel: "Aged 2–11", type: "children" },
-          { label: "Infants", subLabel: "In seat", type: "infantsSeat" },
-          { label: "Infants", subLabel: "On lap", type: "infantsLap" },
-        ].map((item, index) => (
+        {passengerTypes?.map((item, index) => (
           <MenuItem
             key={index}
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <Box>
-              <Typography>{item.label}</Typography>
+              <Typography
+                sx={{
+                  color: item?.enabled
+                    ? theme.palette.mainColors.text
+                    : theme.palette.mainColors.secondaryText,
+                }}
+              >
+                {item?.label}
+              </Typography>
               {item.subLabel && (
                 <Typography variant="caption">{item.subLabel}</Typography>
               )}
@@ -89,19 +131,33 @@ const PassengerSelector = () => {
                 onClick={() => handleChange(item.type, "decrease")}
                 sx={{
                   borderRadius: "5px",
-                  color: theme.palette.mainColors.secondaryText,
+                  color: item?.enabled
+                    ? theme.palette.mainColors.text
+                    : theme.palette.mainColors.secondaryText,
                 }}
+                disabled={!item.enabled || passengers[item.type] === 0}
               >
                 <RemoveIcon fontSize="small" />
               </IconButton>
-              <Typography>{passengers[item.type]}</Typography>
+              <Typography
+                sx={{
+                  color: item?.enabled
+                    ? theme.palette.mainColors.text
+                    : theme.palette.mainColors.secondaryText,
+                }}
+              >
+                {passengers[item.type]}
+              </Typography>
               <IconButton
                 size="small"
                 onClick={() => handleChange(item.type, "increase")}
                 sx={{
-                  color: theme.palette.mainColors.secondaryText,
+                  color: item?.enabled
+                    ? theme.palette.mainColors.text
+                    : theme.palette.mainColors.secondaryText,
                   borderRadius: "5px",
                 }}
+                disabled={!item.enabled}
               >
                 <AddIcon fontSize="small" />
               </IconButton>
@@ -126,7 +182,7 @@ const PassengerSelector = () => {
               textTransform: "capitalize",
               fontWeight: 500,
             }}
-            onClick={handleClose}
+            onClick={handleDone}
           >
             Done
           </Button>
