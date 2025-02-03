@@ -19,7 +19,7 @@ const FlightsMdUpComp = ({ item, formatDuration }) => {
           imgLink={item.legs[0]?.carriers.marketing[0].logoUrl}
           img={true}
           primary={`${dayjs(item.legs[0].departure).format("h:mm A")} - ${dayjs(
-            item.legs[0].departure
+            item.legs[0].arrival
           ).format("h:mm A")}`}
           secondary={item.legs[0].carriers.marketing[0].name}
         />

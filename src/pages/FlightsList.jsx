@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import FlightsMdUpComp from "../components/Flights/FlightsMdUpComp";
 import { ListItemComp } from "../components/Flights/FlyListItemComp";
+import FlightsMdDownComp from "../components/Flights/FlightsMdDownComp";
 
 dayjs.extend(duration);
 
@@ -97,10 +98,16 @@ const FlightsList = () => {
                     </Box>
                   </Box>
                 ) : (
-                  <FlightsMdUpComp
-                    item={item}
-                    formatDuration={formatDuration}
-                  />
+                  <>
+                    {/* <FlightsMdUpComp
+                      item={item}
+                      formatDuration={formatDuration}
+                    /> */}
+                    <FlightsMdDownComp
+                      item={item}
+                      formatDuration={formatDuration}
+                    />
+                  </>
                 )}
               </AccordionSummary>
               <AccordionDetails>
