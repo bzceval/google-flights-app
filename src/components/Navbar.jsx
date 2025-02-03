@@ -20,7 +20,7 @@ import GoogleDarkIcon from "../assets/images/googlelogo_dark.svg";
 import GoogleLightIcon from "../assets/images/googlelogo_light.svg";
 
 const Navbar = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const darkMode = true;
   const settings = ["Use device default", "Dark Mode", "Light Mode"];
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,7 +32,7 @@ const Navbar = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: theme.palette.mainColors.default,
+        //backgroundColor: theme.palette.mainColors.default,
         boxShadow: "none",
       }}
     >
@@ -47,14 +47,20 @@ const Navbar = () => {
                 src={darkMode ? GoogleDarkIcon : GoogleLightIcon}
                 alt="Google Logo"
                 style={{
-                  marginTop: '.6rem'
+                  marginTop: ".6rem",
                 }}
               />
             </Link>
           </IconButton>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: { xs: 0, sm: 0.5, md: 1.5 },
+          }}
+        >
           <Tooltip title="Change appearance">
             <IconButton
               onClick={handleMenuToggle}
