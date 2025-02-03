@@ -1,5 +1,4 @@
 import {
-  Button,
   TextField,
   IconButton,
   Autocomplete,
@@ -12,8 +11,7 @@ import {
   LocationOnOutlined as LocationOnOutlinedIcon,
 } from "@mui/icons-material";
 import React from "react";
-import Departure from "./DateComp/Departure";
-import RoundTrip from "./DateComp/RoundTrip";
+import SelectDateComp from "./DateComp/SelectDateComp";
 
 export const InputAutoComp = ({
   type,
@@ -61,82 +59,49 @@ export const InputAutoComp = ({
 };
 
 const SearchInput = ({
-  flights,
   openAutocomplete,
   searchAirports,
   selectedOption,
   handleWhereChange,
-  handleAddFlight,
   onSelectFlight,
-  onDate,
+  onSelectDate,
   onCloseAutocomplete,
 }) => {
   return (
     <Stack>
-      {flights.map((_, index) => (
-        <Grid2
-          container
-          spacing={2}
-          alignItems="center"
-          justifyContent="center"
-          key={index}
-        >
-          <Grid2 item={"true"} xs={12} sm={7} md={7}>
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={1}
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <InputAutoComp
-                type="whereFrom"
-                openAutocomplete={openAutocomplete}
-                searchAirports={searchAirports}
-                handleWhereChange={handleWhereChange}
-                onSelectFlight={onSelectFlight}
-                onCloseAutocomplete={onCloseAutocomplete}
-              />
-              <IconButton sx={{ color: "#fff" }}>
-                <SwapHorizIcon />
-              </IconButton>
-              <InputAutoComp
-                type="whereTo"
-                openAutocomplete={openAutocomplete}
-                searchAirports={searchAirports}
-                handleWhereChange={handleWhereChange}
-                onSelectFlight={onSelectFlight}
-                onCloseAutocomplete={onCloseAutocomplete}
-              />
-            </Stack>
-          </Grid2>
-          <Grid2 item={"true"} xs={12} sm={5} md={5}>
-            {selectedOption.label === "Round trip" ? (
-              <RoundTrip onDate={onDate} />
-            ) : (
-              <Departure onDate={onDate} />
-            )}
-          </Grid2>
+      <Grid2 container spacing={2} alignItems="center" justifyContent="center">
+        <Grid2 item={"true"} xs={12} sm={7} md={7}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <InputAutoComp
+              type="whereFrom"
+              openAutocomplete={openAutocomplete}
+              searchAirports={searchAirports}
+              handleWhereChange={handleWhereChange}
+              onSelectFlight={onSelectFlight}
+              onCloseAutocomplete={onCloseAutocomplete}
+            />
+            <IconButton sx={{ color: "#fff" }}>
+              <SwapHorizIcon />
+            </IconButton>
+            <InputAutoComp
+              type="whereTo"
+              openAutocomplete={openAutocomplete}
+              searchAirports={searchAirports}
+              handleWhereChange={handleWhereChange}
+              onSelectFlight={onSelectFlight}
+              onCloseAutocomplete={onCloseAutocomplete}
+            />
+          </Stack>
         </Grid2>
-      ))}
-
-      {selectedOption.label === "Multi City" && flights.length < 5 && (
-        <Grid2 container justifyContent="center" my={3}>
-          <Grid2 item={"true"} xs={6} sm={4} md={3} lg={3}>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#8AB4F8",
-                borderRadius: "24px",
-                textTransform: "capitalize",
-                "&:hover": { bgcolor: "#AECBFA" },
-              }}
-              onClick={handleAddFlight}
-            >
-              Add Flight
-            </Button>
-          </Grid2>
+        <Grid2 item={"true"} xs={12} sm={5} md={5}>
+          <SelectDateComp onSelectDate={onSelectDate} />
         </Grid2>
-      )}
+      </Grid2>
     </Stack>
   );
 };

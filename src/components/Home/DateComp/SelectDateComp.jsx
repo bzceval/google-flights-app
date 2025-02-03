@@ -3,16 +3,16 @@ import { Box, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { CalendarMonthOutlined as CalendarMonthOutlinedIcon } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs"; // Import dayjs
+import dayjs from "dayjs";
 
-const Departure = ({ onDate }) => {
+const SelectDateComp = ({ onSelectDate }) => {
   const theme = useTheme();
   const [departureDate, setDepartureDate] = useState(null);
 
   const handleDateChange = (newValue) => {
     setDepartureDate(newValue);
     if (newValue) {
-      onDate(dayjs(newValue).format("YYYY-MM-DD"), "oneDate");
+      onSelectDate(dayjs(newValue).format("YYYY-MM-DD"));
     }
   };
 
@@ -32,7 +32,8 @@ const Departure = ({ onDate }) => {
         <DatePicker
           value={departureDate}
           onChange={handleDateChange}
-          minDate={dayjs()} // Correct way to disable past dates using dayjs
+          minDate={dayjs()}
+          format="ddd, MMM DD"
           slotProps={{
             textField: {
               fullWidth: true,
@@ -72,4 +73,4 @@ const Departure = ({ onDate }) => {
   );
 };
 
-export default Departure;
+export default SelectDateComp;

@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 const menuOptions = [
   { label: "One way", icon: <TrendingFlatIcon /> },
-  { label: "Round trip", icon: <SyncAltIcon /> }, 
+  { label: "Round trip", icon: <SyncAltIcon /> },
   { label: "Multi City", icon: <MultipleStopIcon /> },
 ];
 
@@ -32,8 +32,7 @@ const SearchBar = ({ bg }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
-  const [selectedClass, setSelectedClass] = useState("Economy");
-  const [flights, setFlights] = useState([{}]);
+  const [selectedClass, setSelectedClass] = useState("Economy"); 
   const [searchAirports, setSearchAirports] = useState({
     whereTo: [],
     whereFrom: [],
@@ -69,13 +68,7 @@ const SearchBar = ({ bg }) => {
       }));
     }
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
-  };
-
-  const handleAddFlight = () => {
-    if (flights.length < 5) {
-      setFlights([...flights, {}]);
-    }
-  };
+  }; 
 
   const handleSelectFlight = (params, type) => {
     setSelectFlight((prevState) => {
@@ -126,26 +119,11 @@ const SearchBar = ({ bg }) => {
     }));
   };
 
-  const handleDate = (date, type) => {
-    if (type === "oneDate") {
-      setSelectFlight((prevState) => ({
-        ...prevState,
-        oneDate: date,
-        roundDate: {
-          departure: null,
-          return: null,
-        },
-      }));
-    } else {
-      setSelectFlight((prevState) => ({
-        ...prevState,
-        roundDate: {
-          departure: date.departure,
-          return: date.return,
-        },
-        oneDate: null,
-      }));
-    }
+  const handleSelectDate = (date) => {
+    setSelectFlight((prevState) => ({
+      ...prevState,
+      oneDate: date,
+    }));
   };
 
   const fetchData = useCallback(async () => {
@@ -249,15 +227,13 @@ const SearchBar = ({ bg }) => {
 
       {/* INPUTS */}
       <Grid2 container spacing={0.5} alignItems="center">
-        <SearchInput
-          flights={flights}
+        <SearchInput 
           openAutocomplete={openAutocomplete}
           searchAirports={searchAirports}
           selectedOption={selectedOption}
-          handleWhereChange={handleWhereChange}
-          handleAddFlight={handleAddFlight}
+          handleWhereChange={handleWhereChange} 
           onSelectFlight={handleSelectFlight}
-          onDate={handleDate}
+          onSelectDate={handleSelectDate}
           onCloseAutocomplete={() => setOpenAutocomplete(null)}
         />
       </Grid2>
