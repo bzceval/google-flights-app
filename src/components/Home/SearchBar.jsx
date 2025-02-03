@@ -140,7 +140,7 @@ const SearchBar = ({ bg }) => {
   return (
     <Paper
       sx={{
-        padding: "10px 30px",
+        padding: { xs: "10px", sm: "10px 30px" },
         position: "relative",
         backgroundColor: bg,
         border: "none",
@@ -149,8 +149,15 @@ const SearchBar = ({ bg }) => {
       }}
     >
       {/* HEADER */}
-      <Grid2 container spacing={2} alignItems="center">
-        <Grid2 item={"true"}>
+      <Grid2
+        container
+        spacing={2}
+        my={3}
+        alignItems="center"
+        direction="row"
+        wrap="nowrap"
+      >
+        <Grid2 item xs={4} sm="auto">
           <Button
             onClick={(e) => handleMenuOpen(e, "trip")}
             endIcon={<ExpandMoreIcon />}
@@ -160,9 +167,21 @@ const SearchBar = ({ bg }) => {
               alignItems: "center",
               gap: 1,
               color: theme.palette.mainColors.text,
+              maxWidth: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap", 
             }}
           >
-            {selectedOption.icon} {selectedOption.label}
+            <Box
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {selectedOption.icon} {selectedOption.label}
+            </Box>
           </Button>
           <Menu
             anchorEl={anchorEl}
@@ -196,19 +215,31 @@ const SearchBar = ({ bg }) => {
             ))}
           </Menu>
         </Grid2>
-        <Grid2 item={"true"}>
+        <Grid2 item xs={4} sm="auto">
           <PassengerSelector onSelectAdults={handleSelectAdults} />
         </Grid2>
-        <Grid2 item={"true"}>
+        <Grid2 item xs={4} sm="auto">
           <Button
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
             sx={{
               color: theme.palette.mainColors.text,
               textTransform: "capitalize",
+              maxWidth: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap", 
             }}
           >
-            {selectedClass}
+            <Box
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {selectedClass}
+            </Box>
           </Button>
           <Menu
             anchorEl={classEl}
@@ -244,7 +275,7 @@ const SearchBar = ({ bg }) => {
         />
       </Grid2>
 
-      <Box display={"flex"} justifyContent={"center"}>
+      <Box display={"flex"} justifyContent={"center"} mt={3}>
         <Button
           onClick={() => fetchData()}
           variant="contained"
