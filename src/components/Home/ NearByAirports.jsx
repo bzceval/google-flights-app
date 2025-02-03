@@ -14,6 +14,7 @@ import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { getNearByAirports } from "../../services/api";
+import { ErrorDialog } from "../../helper";
 
 const customIcon = new L.Icon({
   iconUrl: markerIcon,
@@ -38,12 +39,12 @@ const NearByAirports = () => {
           setLoading(false);
         },
         (error) => {
-          console.error("Konum alınamadı:", error);
+          ErrorDialog(error);
           setLoading(false);
         }
       );
     } else {
-      console.error("Geolocation desteklenmiyor.");
+      ErrorDialog("Geolocation is not supported.");
       setLoading(false);
     }
   }, []);
@@ -56,7 +57,7 @@ const NearByAirports = () => {
       const response = await getNearByAirports(position);
       setNearAirports(response?.data);
     } catch (error) {
-      console.error("Havaalanları alınırken hata oluştu:", error);
+      ErrorDialog(error);
     } finally {
       setLoading(false);
     }

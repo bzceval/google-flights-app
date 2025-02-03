@@ -3,6 +3,7 @@ import { CssBaseline, responsiveFontSizes } from "@mui/material";
 import { darkTheme, lightTheme } from "./theme";
 import { useMemo } from "react";
 import AppRouter from "./router/AppRouter";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const darkMode = true;
@@ -18,6 +19,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <AppRouter />
         <CssBaseline />
+        <ToastContainer />
       </ThemeProvider>
     </div>
   );

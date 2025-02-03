@@ -4,8 +4,6 @@ import { ListItemCompResponsive } from "./FlyListItemComp";
 import dayjs from "dayjs";
 
 const FlightsMdDownComp = ({ item, formatDuration }) => {
-  console.log(item.legs[0].arrival);
-
   return (
     <Grid2
       container

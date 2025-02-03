@@ -11,6 +11,7 @@ import PassengerSelector from "./PassengerSelector";
 import { getSearchAirports, getSearchFlights } from "../../services/api";
 import SearchInput from "./SearchInput";
 import { useNavigate } from "react-router-dom";
+import { ErrorDialog } from "../../helper";
 
 const menuOptions = [
   { label: "One way", icon: <TrendingFlatIcon /> },
@@ -92,7 +93,7 @@ const SearchBar = ({ bg }) => {
             [where]: airports,
           }));
         } catch (error) {
-          console.error("Error fetching airports:", error);
+          ErrorDialog(error);
         }
       } else {
         setOpenAutocomplete(null);
@@ -121,11 +122,14 @@ const SearchBar = ({ bg }) => {
   const fetchData = useCallback(async () => {
     try {
       const response = await getSearchFlights(selectFlight);
+      if (response.data.status === 200) {
+        navigate("/flights", { state: { flightData: response?.data } });
+      } else {
+        ErrorDialog(response?.data?.message[0]?.date);
+      }
       console.log(response.data);
-
-      navigate("/flights", { state: { flightData: response.data } });
     } catch (error) {
-      console.error("Uçuşlar alınırken hata oluştu:", error);
+      ErrorDialog(error);
     }
   }, [navigate, selectFlight]);
 
@@ -178,7 +182,7 @@ const SearchBar = ({ bg }) => {
                 whiteSpace: "nowrap",
                 display: "flex",
                 alignItems: "center",
-                gap: .5
+                gap: 0.5,
               }}
             >
               {selectedOption.icon} {selectedOption.label}
