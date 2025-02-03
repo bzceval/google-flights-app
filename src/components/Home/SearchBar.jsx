@@ -1,12 +1,5 @@
 import React, { useCallback, useState } from "react";
-import {
-  Box,
-  Button,
-  Menu,
-  MenuItem,
-  useTheme,
-  Grid2,
-} from "@mui/material";
+import { Box, Button, Menu, MenuItem, useTheme, Grid2 } from "@mui/material";
 import {
   ExpandMore as ExpandMoreIcon,
   Search as SearchIcon,
@@ -162,7 +155,7 @@ const SearchBar = ({ bg }) => {
         direction="row"
         wrap="nowrap"
       >
-        <Grid2 item xs={4} sm="auto">
+        <Grid2 item="true" size={{ xs: 4, sm: "auto" }}>
           <Button
             onClick={(e) => handleMenuOpen(e, "trip")}
             endIcon={<ExpandMoreIcon />}
@@ -183,6 +176,9 @@ const SearchBar = ({ bg }) => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                gap: .5
               }}
             >
               {selectedOption.icon} {selectedOption.label}
@@ -220,10 +216,10 @@ const SearchBar = ({ bg }) => {
             ))}
           </Menu>
         </Grid2>
-        <Grid2 item xs={4} sm="auto">
+        <Grid2 item="true" size={{ xs: 4, sm: "auto" }}>
           <PassengerSelector onSelectAdults={handleSelectAdults} />
         </Grid2>
-        <Grid2 item xs={4} sm="auto">
+        <Grid2 item="true" size={{ xs: 4, sm: "auto" }}>
           <Button
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
