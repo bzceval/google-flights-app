@@ -6,14 +6,16 @@ import {
   Box,
   Typography,
   useTheme,
-  Chip, 
+  Chip,
   Grid2,
+  Stack,
 } from "@mui/material";
 import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { getNearByAirports } from "../../services/api";
 import { ErrorDialog } from "../../helper";
+import { Language as LanguageIcon } from "@mui/icons-material";
 
 const customIcon = new L.Icon({
   iconUrl: markerIcon,
@@ -74,26 +76,18 @@ const NearByAirports = () => {
 
   const airportChips = useMemo(
     () =>
-      nearAirports?.data?.nearby?.slice(0, 4).map((item, index) => (
-        <Chip
-          key={index}
-          label={item?.presentation?.suggestionTitle}
-          variant="outlined"
-          sx={{
-            fontWeight: "bold",
-            color: theme.palette.mainColors.text,
-            padding: "17px",
-            cursor: "pointer",
-            fontSize: "14px",
-            whiteSpace: "nowrap",
-            borderRadius: "20px",
-            ":hover": {
-              color: theme.palette.mainColors.mainBlue,
-            },
-          }}
-        />
-      )),
-    [nearAirports, theme.palette.mainColors]
+      nearAirports?.data?.nearby
+        ?.slice(0, 4)
+        .map((item, index) => (
+          <Chip
+            key={index}
+            index={index}
+            label={item?.presentation?.suggestionTitle}
+            icon={LanguageIcon}
+            variant="filled"
+          />
+        )),
+    [nearAirports]
   );
 
   return (
@@ -113,34 +107,44 @@ const NearByAirports = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <>
+        <Stack width={"100%"}>
           <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
             Find cheap flights from{" "}
             {nearAirports?.data?.current?.presentation?.subtitle} to anywhere
           </Typography>
-          <Box sx={{ my: 2, gap: 1, display: "flex", flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              my: 2,
+              gap: 1,
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+            }}
+          >
             {airportChips}
           </Box>
-          {position && (
-            <MapContainer
-              center={position}
-              zoom={5}
-              style={{ height: "250px", width: "100%", marginTop: "20px" }}
-            >
-              <TileLayer
-                url={tileLayerUrl}
-                attribution="&copy; OpenStreetMap &copy; Carto"
-              />
-              <Marker position={position} icon={customIcon}>
-                <Popup>
-                  📍 Your Current Location <br />
-                  Latitude: {position[0]} <br />
-                  Longitude: {position[1]}
-                </Popup>
-              </Marker>
-            </MapContainer>
-          )}
-        </>
+          <Box sx={{ width: "100%" }}>
+            {position && (
+              <MapContainer
+                center={position}
+                zoom={5}
+                style={{ height: "250px", width: "100%", marginTop: "20px" }}
+              >
+                <TileLayer
+                  url={tileLayerUrl}
+                  attribution="&copy; OpenStreetMap &copy; Carto"
+                />
+                <Marker position={position} icon={customIcon}>
+                  <Popup>
+                    📍 Your Current Location <br />
+                    Latitude: {position[0]} <br />
+                    Longitude: {position[1]}
+                  </Popup>
+                </Marker>
+              </MapContainer>
+            )}
+          </Box>
+        </Stack>
       )}
     </Grid2>
   );
