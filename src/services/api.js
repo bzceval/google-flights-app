@@ -29,7 +29,7 @@ export const getSearchAirports = async (query) => {
 export const getSearchFlights = async (params) => {
   console.log(params);
   return await Api.get(
-    `api/v2/flights/searchFlights?originSkyId=${params.originSky[0].skyId}&destinationSkyId=${params.destinationSky[0].skyId}&originEntityId=${params.originSky[0].entityId}&destinationEntityId=${params.destinationSky[0].entityId}&cabinClass=${params.cabinClass}&adults=${params.adults}&sortBy=best&currency=${defaultCurrency}&market=${defaultLocale}&countryCode=${defaultCountryCode}&date=${params.oneDate}`
+    `api/v2/flights/searchFlights?originSkyId=${params.originSky[0].skyId}&destinationSkyId=${params.destinationSky[0].skyId}&originEntityId=${params.originSky[0].entityId}&destinationEntityId=${params.destinationSky[0].entityId}&cabinClass=${params.cabinClass}&adults=${params.passenger.adults}&sortBy=best&currency=${defaultCurrency}&market=${defaultLocale}&countryCode=${defaultCountryCode}&date=${params.oneDate}`
   );
 };
 //https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=LOND&destinationSkyId=NYCA&originEntityId=27544008&destinationEntityId=27537542&cabinClass=premium_economy&adults=1&sortBy=best&currency=USD&market=en-US&countryCode=US&date=2025-05-05
