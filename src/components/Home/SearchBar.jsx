@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import {
   Box,
-  Paper,
   Button,
   Menu,
   MenuItem,
@@ -138,21 +137,27 @@ const SearchBar = ({ bg }) => {
   }, [navigate, selectFlight]);
 
   return (
-    <Paper
+    <Grid2
+      size={12}
+      item="true"
+      my={5}
       sx={{
         padding: { xs: "10px", sm: "10px 30px" },
+        borderRadius: "8px",
         position: "relative",
-        backgroundColor: bg,
-        border: "none",
-        boxShadow:
-          "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",
+        backgroundColor: { xs: "none", sm: bg },
+        width: "100%",
+        boxShadow: {
+          xs: "none",
+          sm: "0 1px 3px 0 rgba(0, 0, 0, .3), 0 4px 8px 3px rgba(0, 0, 0, .15)",
+        },
+        transition: "background-color 0.3s ease",
       }}
     >
       {/* HEADER */}
       <Grid2
         container
         spacing={2}
-        my={3}
         alignItems="center"
         direction="row"
         wrap="nowrap"
@@ -170,7 +175,7 @@ const SearchBar = ({ bg }) => {
               maxWidth: "100%",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap", 
+              whiteSpace: "nowrap",
             }}
           >
             <Box
@@ -228,7 +233,7 @@ const SearchBar = ({ bg }) => {
               maxWidth: "100%",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap", 
+              whiteSpace: "nowrap",
             }}
           >
             <Box
@@ -263,16 +268,14 @@ const SearchBar = ({ bg }) => {
       </Grid2>
 
       {/* INPUTS */}
-      <Grid2 container spacing={0.5} my={3} alignItems="center">
-        <SearchInput
-          openAutocomplete={openAutocomplete}
-          searchAirports={searchAirports}
-          handleWhereChange={handleWhereChange}
-          onSelectFlight={handleSelectFlight}
-          onSelectDate={handleSelectDate}
-          onCloseAutocomplete={() => setOpenAutocomplete(null)}
-        />
-      </Grid2>
+      <SearchInput
+        openAutocomplete={openAutocomplete}
+        searchAirports={searchAirports}
+        handleWhereChange={handleWhereChange}
+        onSelectFlight={handleSelectFlight}
+        onSelectDate={handleSelectDate}
+        onCloseAutocomplete={() => setOpenAutocomplete(null)}
+      />
 
       <Box display={"flex"} justifyContent={"center"} mt={3}>
         <Button
@@ -296,7 +299,7 @@ const SearchBar = ({ bg }) => {
           Explore
         </Button>
       </Box>
-    </Paper>
+    </Grid2>
   );
 };
 

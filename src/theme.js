@@ -5,7 +5,7 @@ export const lightTheme = createTheme({
     mode: "light",
     mainColors: {
       default: "#fff",
-      text: "#70757a",
+      text: "#202124",
       secondary: "#fff",
       secondaryText: "#70757a",
       btnColor: "#90caf9",

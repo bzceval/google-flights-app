@@ -4,10 +4,11 @@ import {
   Autocomplete,
   Grid2,
   Stack,
+  useTheme,
 } from "@mui/material";
 import {
   SwapHoriz as SwapHorizIcon,
-  FiberManualRecordOutlined as FiberManualRecordOutlinedIcon,
+  TripOrigin as TripOriginIcon,
   LocationOnOutlined as LocationOnOutlinedIcon,
 } from "@mui/icons-material";
 import React from "react";
@@ -21,6 +22,7 @@ export const InputAutoComp = ({
   onSelectFlight,
   onCloseAutocomplete,
 }) => {
+  const theme = useTheme();
   return (
     <Autocomplete
       open={openAutocomplete === type}
@@ -31,6 +33,7 @@ export const InputAutoComp = ({
         onSelectFlight(value, type);
         onCloseAutocomplete();
       }}
+      sx={{ width: "100%" }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -41,16 +44,22 @@ export const InputAutoComp = ({
             ...params.InputProps,
             startAdornment:
               type === "whereFrom" ? (
-                <FiberManualRecordOutlinedIcon sx={{ mr: 1 }} />
+                <TripOriginIcon
+                  sx={{
+                    mr: 1,
+                    color: theme.palette.mainColors.secondaryText,
+                    fontSize: "1rem",
+                  }}
+                />
               ) : (
-                <LocationOnOutlinedIcon sx={{ mr: 1 }} />
+                <LocationOnOutlinedIcon
+                  sx={{ mr: 1, color: theme.palette.mainColors.secondaryText }}
+                />
               ),
           }}
           sx={{
-            minWidth: 250,
-            borderRadius: 1,
-            color: "#fff",
-            input: { color: "#fff" },
+            secondaryTextRadius: 1,
+            color: theme.palette.mainColors.text,
           }}
         />
       )}
@@ -66,42 +75,56 @@ const SearchInput = ({
   onSelectDate,
   onCloseAutocomplete,
 }) => {
+  const theme = useTheme();
   return (
-    <Stack>
-      <Grid2 container spacing={2} alignItems="center" justifyContent="center">
-        <Grid2 item={"true"} xs={12} sm={7} md={7}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            alignItems="center"
-            justifyContent="space-between"
+    <Grid2
+      container
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Grid2 item="true" size={{ xs: 12, sm: 7, md: 8 }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="space-between"
+          width={"100%"}
+        >
+          <InputAutoComp
+            type="whereFrom"
+            openAutocomplete={openAutocomplete}
+            searchAirports={searchAirports}
+            handleWhereChange={handleWhereChange}
+            onSelectFlight={onSelectFlight}
+            onCloseAutocomplete={onCloseAutocomplete}
+          />
+          <IconButton
+            sx={{
+              color: theme.palette.mainColors.secondaryText,
+              margin: 0,
+              padding: "0px",
+              display: {xs: "none", sm: "block"}
+            }}
           >
-            <InputAutoComp
-              type="whereFrom"
-              openAutocomplete={openAutocomplete}
-              searchAirports={searchAirports}
-              handleWhereChange={handleWhereChange}
-              onSelectFlight={onSelectFlight}
-              onCloseAutocomplete={onCloseAutocomplete}
-            />
-            <IconButton sx={{ color: "#fff" }}>
-              <SwapHorizIcon />
-            </IconButton>
-            <InputAutoComp
-              type="whereTo"
-              openAutocomplete={openAutocomplete}
-              searchAirports={searchAirports}
-              handleWhereChange={handleWhereChange}
-              onSelectFlight={onSelectFlight}
-              onCloseAutocomplete={onCloseAutocomplete}
-            />
-          </Stack>
-        </Grid2>
-        <Grid2 item={"true"} xs={12} sm={5} md={5}>
-          <SelectDateComp onSelectDate={onSelectDate} />
-        </Grid2>
+            <SwapHorizIcon />
+          </IconButton>
+          <InputAutoComp
+            type="whereTo"
+            openAutocomplete={openAutocomplete}
+            searchAirports={searchAirports}
+            handleWhereChange={handleWhereChange}
+            onSelectFlight={onSelectFlight}
+            onCloseAutocomplete={onCloseAutocomplete}
+          />
+        </Stack>
       </Grid2>
-    </Stack>
+      <Grid2 item="true" size={{ xs: 12, sm: 5, md: 4 }}>
+        <Stack direction="column" alignItems="stretch">
+          <SelectDateComp onSelectDate={onSelectDate} />
+        </Stack>
+      </Grid2>
+    </Grid2>
   );
 };
 
