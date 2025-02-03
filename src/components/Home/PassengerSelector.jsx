@@ -81,7 +81,7 @@ const PassengerSelector = ({ onSelectAdults }) => {
     <>
       <Button
         sx={{
-          color: theme.palette.mainColors.secondaryText,
+          color: theme.palette.mainColors.text,
         }}
         startIcon={<PeopleIcon />}
         onClick={handleOpen}

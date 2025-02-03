@@ -32,7 +32,7 @@ const SearchBar = ({ bg }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
-  const [selectedClass, setSelectedClass] = useState("Economy"); 
+  const [selectedClass, setSelectedClass] = useState("Economy");
   const [searchAirports, setSearchAirports] = useState({
     whereTo: [],
     whereFrom: [],
@@ -68,7 +68,7 @@ const SearchBar = ({ bg }) => {
       }));
     }
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
-  }; 
+  };
 
   const handleSelectFlight = (params, type) => {
     setSelectFlight((prevState) => {
@@ -159,7 +159,7 @@ const SearchBar = ({ bg }) => {
               display: "flex",
               alignItems: "center",
               gap: 1,
-              color: theme.palette.mainColors.secondaryText,
+              color: theme.palette.mainColors.text,
             }}
           >
             {selectedOption.icon} {selectedOption.label}
@@ -172,14 +172,20 @@ const SearchBar = ({ bg }) => {
             {menuOptions.map((option, index) => (
               <MenuItem
                 key={index}
-                onClick={() => handleMenuClose(option, "trip")}
+                onClick={() =>
+                  option.label === "One way" && handleMenuClose(option, "trip")
+                }
+                disabled={option.label !== "One way"}
               >
                 <Box
                   display="flex"
                   alignItems="center"
                   gap={1}
                   sx={{
-                    color: theme.palette.mainColors.secondaryText,
+                    color:
+                      option.label === "One way"
+                        ? theme.palette.mainColors.text
+                        : theme.palette.mainColors.secondaryText,
                     fontSize: ".9rem",
                   }}
                 >
@@ -198,7 +204,7 @@ const SearchBar = ({ bg }) => {
             onClick={(e) => handleMenuOpen(e, "class")}
             endIcon={<ExpandMoreIcon />}
             sx={{
-              color: theme.palette.mainColors.secondaryText,
+              color: theme.palette.mainColors.text,
               textTransform: "capitalize",
             }}
           >
@@ -226,12 +232,12 @@ const SearchBar = ({ bg }) => {
       </Grid2>
 
       {/* INPUTS */}
-      <Grid2 container spacing={0.5} alignItems="center">
-        <SearchInput 
+      <Grid2 container spacing={0.5} my={3} alignItems="center">
+        <SearchInput
           openAutocomplete={openAutocomplete}
           searchAirports={searchAirports}
           selectedOption={selectedOption}
-          handleWhereChange={handleWhereChange} 
+          handleWhereChange={handleWhereChange}
           onSelectFlight={handleSelectFlight}
           onSelectDate={handleSelectDate}
           onCloseAutocomplete={() => setOpenAutocomplete(null)}
