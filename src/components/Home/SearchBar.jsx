@@ -1,5 +1,13 @@
 import React, { useCallback, useState } from "react";
-import { Box, Button, Menu, MenuItem, useTheme, Grid2 } from "@mui/material";
+import {
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  useTheme,
+  Grid2,
+  CircularProgress,
+} from "@mui/material";
 import {
   ExpandMore as ExpandMoreIcon,
   Search as SearchIcon,
@@ -25,6 +33,7 @@ const SearchBar = ({ bg }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
+  const [loading, setLoading] = useState(false);
   const [selectedClass, setSelectedClass] = useState("Economy");
   const [searchAirports, setSearchAirports] = useState({
     whereTo: [],
@@ -129,14 +138,17 @@ const SearchBar = ({ bg }) => {
   }, [selectFlight]);
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
     if (!isFormValid()) {
       ErrorDialog("Please fill in the relevant inputs!");
     }
     try {
       const response = await getSearchFlights(selectFlight);
       navigate("/flights", { state: { flightData: response.data } });
+      setLoading(false);
       console.log(response.data);
     } catch (error) {
+      setLoading(false);
       ErrorDialog(error);
     }
   }, [navigate, selectFlight, isFormValid]);
@@ -302,7 +314,13 @@ const SearchBar = ({ bg }) => {
             justifyContent: "center",
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           }}
-          startIcon={<SearchIcon />}
+          startIcon={
+            loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              <SearchIcon />
+            )
+          }
         >
           Explore
         </Button>
