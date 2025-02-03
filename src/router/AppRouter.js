@@ -5,6 +5,7 @@ const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));
 const Home = lazy(() => import("../pages/Home"));
 const FlightsList = lazy(() => import("../pages/FlightsList"));
+const NotFoundComp = lazy(() => import("../pages/NotFoundComp"));
 
 const AppRouter = () => {
   return (
@@ -14,6 +15,7 @@ const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/flights" element={<FlightsList />} />
+          <Route path="*" element={<NotFoundComp />} />
         </Routes>
         <Footer />
       </Suspense>
