@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import {
@@ -6,11 +6,10 @@ import {
   Box,
   Typography,
   useTheme,
-  Chip,
+  Chip, 
   Grid2,
 } from "@mui/material";
 import L from "leaflet";
-
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { getNearByAirports } from "../../services/api";
@@ -34,8 +33,7 @@ const NearByAirports = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          const { latitude, longitude } = pos.coords;
-          setPosition([latitude, longitude]);
+          setPosition([pos.coords.latitude, pos.coords.longitude]);
           setLoading(false);
         },
         (error) => {
@@ -52,7 +50,6 @@ const NearByAirports = () => {
   const fetchData = useCallback(async () => {
     if (!position) return;
     setLoading(true);
-
     try {
       const response = await getNearByAirports(position);
       setNearAirports(response?.data);
@@ -64,24 +61,43 @@ const NearByAirports = () => {
   }, [position]);
 
   useEffect(() => {
-    if (position) {
-      fetchData();
-    }
-  }, [fetchData, position]);
+    fetchData();
+  }, [fetchData]);
 
-  useEffect(() => {
-    if (position) {
-      fetchData();
-    }
-  }, [fetchData, position]);
+  const tileLayerUrl = useMemo(
+    () =>
+      theme.palette.mode === "dark"
+        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    [theme.palette.mode]
+  );
 
-  const tileLayerUrl =
-    theme.palette.mode === "dark"
-      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  const airportChips = useMemo(
+    () =>
+      nearAirports?.data?.nearby?.slice(0, 4).map((item, index) => (
+        <Chip
+          key={index}
+          label={item?.presentation?.suggestionTitle}
+          variant="outlined"
+          sx={{
+            fontWeight: "bold",
+            color: theme.palette.mainColors.text,
+            padding: "17px",
+            cursor: "pointer",
+            fontSize: "14px",
+            whiteSpace: "nowrap",
+            borderRadius: "20px",
+            ":hover": {
+              color: theme.palette.mainColors.mainBlue,
+            },
+          }}
+        />
+      )),
+    [nearAirports, theme.palette.mainColors]
+  );
 
   return (
-    <Grid2 container sx={{ my: 8, width: { xs: "100%" } }}>
+    <Grid2 container sx={{ my: 8, width: "100%" }}>
       {loading ? (
         <Box
           sx={{
@@ -103,26 +119,7 @@ const NearByAirports = () => {
             {nearAirports?.data?.current?.presentation?.subtitle} to anywhere
           </Typography>
           <Box sx={{ my: 2, gap: 1, display: "flex", flexWrap: "wrap" }}>
-            {nearAirports?.data?.nearby?.slice(0, 4).map((item, index) => (
-              <Chip
-                key={index}
-                label={item?.presentation?.suggestionTitle}
-                variant="outlined"
-                sx={{
-                  fontWeight: "bold",
-                  color: theme.palette.mainColors.text,
-                  paddingTop: "17px",
-                  paddingBottom: "17px",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  whiteSpace: "nowrap",
-                  borderRadius: "20px",
-                  ":hover": {
-                    color: theme.palette.mainColors.mainBlue,
-                  },
-                }}
-              />
-            ))}
+            {airportChips}
           </Box>
           {position && (
             <MapContainer
@@ -132,11 +129,11 @@ const NearByAirports = () => {
             >
               <TileLayer
                 url={tileLayerUrl}
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">Carto</a>'
+                attribution="&copy; OpenStreetMap &copy; Carto"
               />
               <Marker position={position} icon={customIcon}>
                 <Popup>
-                  📍 Mevcut Konumun <br />
+                  📍 Your Current Location <br />
                   Latitude: {position[0]} <br />
                   Longitude: {position[1]}
                 </Popup>

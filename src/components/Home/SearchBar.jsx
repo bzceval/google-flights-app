@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -21,15 +21,21 @@ import SearchInput from "./SearchInput";
 import { useNavigate } from "react-router-dom";
 import { ErrorDialog } from "../../helper";
 
-const menuOptions = [
-  { label: "One way", icon: <TrendingFlatIcon /> },
-  { label: "Round trip", icon: <SyncAltIcon /> },
-  { label: "Multi City", icon: <MultipleStopIcon /> },
-];
-
-const classOptions = ["Economy", "Premium Economy", "Business", "First"];
-
 const SearchBar = ({ bg }) => {
+  const menuOptions = useMemo(
+    () => [
+      { label: "One way", icon: <TrendingFlatIcon /> },
+      { label: "Round trip", icon: <SyncAltIcon /> },
+      { label: "Multi City", icon: <MultipleStopIcon /> },
+    ],
+    []
+  );
+
+  const classOptions = useMemo(
+    () => ["Economy", "Premium Economy", "Business", "First"],
+    []
+  );
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [classEl, setClassEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]);
@@ -53,12 +59,13 @@ const SearchBar = ({ bg }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleMenuOpen = (event, type) =>
+  const handleMenuOpen = useCallback((event, type) => {
     type === "trip"
       ? setAnchorEl(event.currentTarget)
       : setClassEl(event.currentTarget);
+  }, []);
 
-  const handleMenuClose = (option, type) => {
+  const handleMenuClose = useCallback((option, type) => {
     if (type === "trip") {
       setSelectedOption(option);
     } else if (type === "class") {
@@ -70,9 +77,9 @@ const SearchBar = ({ bg }) => {
       }));
     }
     type === "trip" ? setAnchorEl(null) : setClassEl(null);
-  };
+  }, []);
 
-  const handleSelectFlight = (params, type) => {
+  const handleSelectFlight = useCallback((params, type) => {
     setSelectFlight((prevState) => {
       const newState = { ...prevState };
       if (type === "whereFrom") {
@@ -82,9 +89,9 @@ const SearchBar = ({ bg }) => {
       }
       return newState;
     });
-  };
+  }, []);
 
-  const handleWhereChange = async (e, where) => {
+  const handleWhereChange = useCallback(async (e, where) => {
     const value = e.target.value;
     if (typeof value === "string") {
       const normalizedValue = value
@@ -112,21 +119,21 @@ const SearchBar = ({ bg }) => {
         }));
       }
     }
-  };
+  }, []);
 
-  const handleSelectAdults = (adults) => {
+  const handleSelectAdults = useCallback((adults) => {
     setSelectFlight((prevState) => ({
       ...prevState,
-      adults: adults,
+      passenger: { adults: adults },
     }));
-  };
+  }, []);
 
-  const handleSelectDate = (date) => {
+  const handleSelectDate = useCallback((date) => {
     setSelectFlight((prevState) => ({
       ...prevState,
       oneDate: date,
     }));
-  };
+  }, []);
 
   const isFormValid = useCallback(() => {
     return (
@@ -141,12 +148,13 @@ const SearchBar = ({ bg }) => {
     setLoading(true);
     if (!isFormValid()) {
       ErrorDialog("Please fill in the relevant inputs!");
+      setLoading(false);
+      return;
     }
     try {
       const response = await getSearchFlights(selectFlight);
       navigate("/flights", { state: { flightData: response.data } });
       setLoading(false);
-      console.log(response.data);
     } catch (error) {
       setLoading(false);
       ErrorDialog(error);

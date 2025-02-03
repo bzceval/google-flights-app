@@ -11,61 +11,82 @@ import {
   TripOrigin as TripOriginIcon,
   LocationOnOutlined as LocationOnOutlinedIcon,
 } from "@mui/icons-material";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import SelectDateComp from "./DateComp/SelectDateComp";
 
-export const InputAutoComp = ({
-  type,
-  openAutocomplete,
-  searchAirports,
-  handleWhereChange,
-  onSelectFlight,
-  onCloseAutocomplete,
-}) => {
-  const theme = useTheme();
-  return (
-    <Autocomplete
-      open={openAutocomplete === type}
-      options={searchAirports?.[type] || []}
-      getOptionLabel={(option) => option.presentation?.suggestionTitle || ""}
-      onInputChange={(e) => handleWhereChange(e, type)}
-      onChange={(event, value) => {
+const InputAutoComp = React.memo(
+  ({
+    type,
+    openAutocomplete,
+    searchAirports,
+    handleWhereChange,
+    onSelectFlight,
+    onCloseAutocomplete,
+  }) => {
+    const theme = useTheme();
+
+    const options = useMemo(
+      () => searchAirports?.[type] || [],
+      [searchAirports, type]
+    );
+
+    const handleInputChange = useCallback(
+      (event) => handleWhereChange(event, type),
+      [handleWhereChange, type]
+    );
+
+    const handleSelect = useCallback(
+      (event, value) => {
         onSelectFlight(value, type);
         onCloseAutocomplete();
-      }}
-      sx={{ width: "100%" }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          fullWidth
-          variant="outlined"
-          placeholder={type === "whereFrom" ? "Where from?" : "Where to?"}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment:
-              type === "whereFrom" ? (
-                <TripOriginIcon
-                  sx={{
-                    mr: 1,
-                    color: theme.palette.mainColors.secondaryText,
-                    fontSize: "1rem",
-                  }}
-                />
-              ) : (
-                <LocationOnOutlinedIcon
-                  sx={{ mr: 1, color: theme.palette.mainColors.secondaryText }}
-                />
-              ),
-          }}
-          sx={{
-            secondaryTextRadius: 1,
-            color: theme.palette.mainColors.text,
-          }}
-        />
-      )}
-    />
-  );
-};
+      },
+      [onSelectFlight, onCloseAutocomplete, type]
+    );
+
+    return (
+      <Autocomplete
+        open={openAutocomplete === type}
+        options={options}
+        getOptionLabel={(option) => option.presentation?.suggestionTitle || ""}
+        onInputChange={handleInputChange}
+        onChange={handleSelect}
+        sx={{ width: "100%" }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            variant="outlined"
+            placeholder={type === "whereFrom" ? "Where from?" : "Where to?"}
+            InputProps={{
+              ...params.InputProps,
+              startAdornment:
+                type === "whereFrom" ? (
+                  <TripOriginIcon
+                    sx={{
+                      mr: 1,
+                      color: theme.palette.mainColors.secondaryText,
+                      fontSize: "1rem",
+                    }}
+                  />
+                ) : (
+                  <LocationOnOutlinedIcon
+                    sx={{
+                      mr: 1,
+                      color: theme.palette.mainColors.secondaryText,
+                    }}
+                  />
+                ),
+            }}
+            sx={{
+              secondaryTextRadius: 1,
+              color: theme.palette.mainColors.text,
+            }}
+          />
+        )}
+      />
+    );
+  }
+);
 
 const SearchInput = ({
   openAutocomplete,
@@ -77,12 +98,7 @@ const SearchInput = ({
 }) => {
   const theme = useTheme();
   return (
-    <Grid2
-      container
-      spacing={2}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Grid2 container spacing={2} alignItems="center" justifyContent="center">
       <Grid2 item="true" size={{ xs: 12, sm: 7, md: 8 }}>
         <Stack
           direction="row"
@@ -104,7 +120,7 @@ const SearchInput = ({
               color: theme.palette.mainColors.secondaryText,
               margin: 0,
               padding: "0px",
-              display: {xs: "none", sm: "block"}
+              display: { xs: "none", sm: "block" },
             }}
           >
             <SwapHorizIcon />

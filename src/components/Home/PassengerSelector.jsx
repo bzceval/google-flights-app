@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Button,
   Menu,
@@ -13,6 +13,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
 const PassengerSelector = ({ onSelectAdults }) => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [passengers, setPassengers] = useState({
     adults: 1,
@@ -20,37 +21,6 @@ const PassengerSelector = ({ onSelectAdults }) => {
     infantsSeat: 0,
     infantsLap: 0,
   });
-  const theme = useTheme();
-
-  const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleChange = (type, operation) => {
-    setPassengers((prev) => {
-      const updatedPassengers = {
-        ...prev,
-        [type]:
-          operation === "increase"
-            ? prev[type] + 1
-            : Math.max(0, prev[type] - 1),
-      };
-      if (type === "adults") {
-        onSelectAdults(updatedPassengers.adults);
-      }
-
-      return updatedPassengers;
-    });
-  };
-
-  const handleDone = () => {
-    onSelectAdults(passengers.adults);
-    handleClose();
-  };
 
   const passengerTypes = useMemo(
     () => [
@@ -77,12 +47,42 @@ const PassengerSelector = ({ onSelectAdults }) => {
     []
   );
 
+  const handleOpen = useCallback((event) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
+
+  const handleChange = useCallback(
+    (type, operation) => {
+      setPassengers((prev) => {
+        const newValue =
+          operation === "increase"
+            ? prev[type] + 1
+            : Math.max(0, prev[type] - 1);
+
+        if (newValue !== prev[type]) {
+          const updatedPassengers = { ...prev, [type]: newValue };
+          if (type === "adults") onSelectAdults(updatedPassengers.adults);
+          return updatedPassengers;
+        }
+        return prev;
+      });
+    },
+    [onSelectAdults]
+  );
+
+  const handleDone = useCallback(() => {
+    onSelectAdults(passengers.adults);
+    handleClose();
+  }, [onSelectAdults, passengers.adults, handleClose]);
+
   return (
     <>
       <Button
-        sx={{
-          color: theme.palette.mainColors.text,
-        }}
+        sx={{ color: theme.palette.mainColors.text }}
         startIcon={<PeopleIcon />}
         onClick={handleOpen}
       >
@@ -106,20 +106,20 @@ const PassengerSelector = ({ onSelectAdults }) => {
           },
         }}
       >
-        {passengerTypes?.map((item, index) => (
+        {passengerTypes.map((item) => (
           <MenuItem
-            key={index}
+            key={item.type}
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <Box>
               <Typography
                 sx={{
-                  color: item?.enabled
+                  color: item.enabled
                     ? theme.palette.mainColors.text
                     : theme.palette.mainColors.secondaryText,
                 }}
               >
-                {item?.label}
+                {item.label}
               </Typography>
               {item.subLabel && (
                 <Typography variant="caption">{item.subLabel}</Typography>
@@ -131,7 +131,7 @@ const PassengerSelector = ({ onSelectAdults }) => {
                 onClick={() => handleChange(item.type, "decrease")}
                 sx={{
                   borderRadius: "5px",
-                  color: item?.enabled
+                  color: item.enabled
                     ? theme.palette.mainColors.text
                     : theme.palette.mainColors.secondaryText,
                 }}
@@ -141,7 +141,7 @@ const PassengerSelector = ({ onSelectAdults }) => {
               </IconButton>
               <Typography
                 sx={{
-                  color: item?.enabled
+                  color: item.enabled
                     ? theme.palette.mainColors.text
                     : theme.palette.mainColors.secondaryText,
                 }}
@@ -152,7 +152,7 @@ const PassengerSelector = ({ onSelectAdults }) => {
                 size="small"
                 onClick={() => handleChange(item.type, "increase")}
                 sx={{
-                  color: item?.enabled
+                  color: item.enabled
                     ? theme.palette.mainColors.text
                     : theme.palette.mainColors.secondaryText,
                   borderRadius: "5px",

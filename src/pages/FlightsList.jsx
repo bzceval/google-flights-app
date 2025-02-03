@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import AirlineSeatLegroomReducedIcon from "@mui/icons-material/AirlineSeatLegroomReduced";
 import PublicIcon from "@mui/icons-material/Public";
@@ -40,13 +40,16 @@ const FlightsList = () => {
   const flightData = location.state;
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
-  const handleChange = (index) => {
-    setExpanded((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index)
-        : [...prev, index]
-    );
-  };
+  const handleChange = useCallback(
+    (index) => {
+      setExpanded((prev) =>
+        prev.includes(index)
+          ? prev.filter((item) => item !== index)
+          : [...prev, index]
+      );
+    },
+    [setExpanded]
+  );
 
   return (
     <Container maxWidth="lg">
