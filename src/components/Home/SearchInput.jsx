@@ -61,7 +61,6 @@ export const InputAutoComp = ({
 const SearchInput = ({
   openAutocomplete,
   searchAirports,
-  selectedOption,
   handleWhereChange,
   onSelectFlight,
   onSelectDate,

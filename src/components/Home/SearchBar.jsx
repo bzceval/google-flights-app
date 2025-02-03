@@ -267,7 +267,6 @@ const SearchBar = ({ bg }) => {
         <SearchInput
           openAutocomplete={openAutocomplete}
           searchAirports={searchAirports}
-          selectedOption={selectedOption}
           handleWhereChange={handleWhereChange}
           onSelectFlight={handleSelectFlight}
           onSelectDate={handleSelectDate}
