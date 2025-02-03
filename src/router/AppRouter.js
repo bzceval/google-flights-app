@@ -1,19 +1,22 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import { CircularProgress } from "@mui/material";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "../components/Footer";
-import Home from "../pages/Home";
-import FlightsList from "../pages/FlightsList";
+const Navbar = lazy(() => import("../components/Navbar"));
+const Footer = lazy(() => import("../components/Footer"));
+const Home = lazy(() => import("../pages/Home"));
+const FlightsList = lazy(() => import("../pages/FlightsList"));
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/flights" element={<FlightsList />} />
-      </Routes>
-      <Footer />
+      <Suspense fallback={<CircularProgress />}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/flights" element={<FlightsList />} />
+        </Routes>
+        <Footer />
+      </Suspense>
     </BrowserRouter>
   );
 };
