@@ -220,7 +220,7 @@ const SearchBar = ({ bg }) => {
                 key={index}
                 onClick={() => handleMenuClose(option, "class")}
                 sx={{
-                  color: theme.palette.mainColors.secondaryText,
+                  color: theme.palette.mainColors.text,
                   fontSize: ".9rem",
                 }}
               >
@@ -244,23 +244,28 @@ const SearchBar = ({ bg }) => {
         />
       </Grid2>
 
-      <Grid2 container justifyContent="center">
-        <Grid2 item={"true"} size={{ xs: 6, sm: 4, md: 2, lg: 1.5 }}>
-          <Button
-            onClick={() => fetchData()}
-            variant="contained"
-            sx={{
-              bgcolor: "#8AB4F8",
-              borderRadius: "24px",
-              textTransform: "capitalize",
-              "&:hover": { bgcolor: "#AECBFA" },
-            }}
-            startIcon={<SearchIcon />}
-          >
-            Search
-          </Button>
-        </Grid2>
-      </Grid2>
+      <Box display={"flex"} justifyContent={"center"}>
+        <Button
+          onClick={() => fetchData()}
+          variant="contained"
+          sx={{
+            bgcolor: theme.palette.mainColors.mainBlue,
+            borderRadius: "36px",
+            textTransform: "capitalize",
+            "&:hover": { bgcolor: "#AECBFA" },
+            position: "absolute",
+            top: "100%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+          startIcon={<SearchIcon />}
+        >
+          Explore
+        </Button>
+      </Box>
     </Paper>
   );
 };
