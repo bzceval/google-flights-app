@@ -102,14 +102,14 @@ const SearchBar = ({ bg }) => {
       if (normalizedValue.length >= 1) {
         setOpenAutocomplete(where);
         try {
-          const response = await getSearchAirports(normalizedValue);
+          const response = await getSearchAirports(normalizedValue); 
           const airports = response?.data?.data || [];
           setSearchAirports((prev) => ({
             ...prev,
             [where]: airports,
           }));
         } catch (error) {
-          ErrorDialog(error);
+          ErrorDialog(error.message);
         }
       } else {
         setOpenAutocomplete(null);
@@ -157,7 +157,7 @@ const SearchBar = ({ bg }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      ErrorDialog(error);
+      ErrorDialog(error.message);
     }
   }, [navigate, selectFlight, isFormValid]);
 
