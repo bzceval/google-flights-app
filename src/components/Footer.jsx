@@ -38,7 +38,7 @@ const Footer = () => {
       <Grid2
         item="true"
         size={{ xs: 12, md: 8 }}
-        sx={{ gap: 2, display: "flex" }}
+        sx={{ gap: 2, display: "flex", flexWrap: "wrap" }}
       >
         {footerData?.map((item, index) => (
           <Chip
