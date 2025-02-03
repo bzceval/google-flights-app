@@ -6,7 +6,7 @@ import {
   Box,
   Typography,
   useTheme,
-  Chip, 
+  Chip,
   Grid2,
 } from "@mui/material";
 import L from "leaflet";
@@ -80,7 +80,7 @@ const NearByAirports = () => {
       : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   return (
-    <Grid2 container sx={{ my: 8, width: { xs: "100%",  md: "90%" } }}>
+    <Grid2 container sx={{ my: 8, width: { xs: "100%" } }}>
       {loading ? (
         <Box
           sx={{
