@@ -30,6 +30,7 @@ const NearByAirports = () => {
   const [position, setPosition] = useState(null);
   const [loading, setLoading] = useState(true);
   const [nearAirports, setNearAirports] = useState([]);
+  const [locationError, setLocationError] = useState(false); // Added state for location error
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -39,11 +40,13 @@ const NearByAirports = () => {
           setLoading(false);
         },
         (error) => {
-          ErrorDialog(error);
+          setLocationError(true); // Set locationError to true if there's an error
+          ErrorDialog("Location information could not be retrieved");
           setLoading(false);
         }
       );
     } else {
+      setLocationError(true);
       ErrorDialog("Geolocation is not supported.");
       setLoading(false);
     }
@@ -90,6 +93,26 @@ const NearByAirports = () => {
     [nearAirports]
   );
 
+  if (locationError) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          minHeight: "250px",
+          mt: 2,
+          p: 2,
+        }}
+      >
+        <Typography color="error">
+          Location information could not be retrieved
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Grid2 container sx={{ my: 8, width: "100%" }}>
       {loading ? (
@@ -124,7 +147,7 @@ const NearByAirports = () => {
             {airportChips}
           </Box>
           <Box sx={{ width: "100%" }}>
-            {position && (
+            {position && !locationError && (
               <MapContainer
                 center={position}
                 zoom={1.5}
