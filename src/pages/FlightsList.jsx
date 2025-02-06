@@ -4,6 +4,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
+  Alert,
+  AlertTitle,
   Box,
   Container,
   Grid2,
@@ -57,7 +59,7 @@ const FlightsList = () => {
       <SearchBar bg={"none"} />
 
       <Stack my={6}>
-        {flightData?.flightData?.data?.itineraries &&
+        {flightData?.flightData?.data?.itineraries ? (
           flightData?.flightData?.data?.itineraries?.map((item, index) => (
             <Accordion
               key={index}
@@ -228,7 +230,15 @@ const FlightsList = () => {
                 </Grid2>
               </AccordionDetails>
             </Accordion>
-          ))}
+          ))
+        ) : (
+          <Box minHeight={"35vh"}>
+            <Alert severity="warning">
+              <AlertTitle>Warning</AlertTitle>
+              You haven't searched for a flight yet.
+            </Alert>
+          </Box>
+        )}
       </Stack>
     </Container>
   );
