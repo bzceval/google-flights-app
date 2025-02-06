@@ -27,8 +27,6 @@ This project is inspired by Google Flights and features one-way flight ticket se
   - Scrum
   - Vercel
 
-<br><br>
-
 ## Google Flight Basic Version Endpoint Path
 
 - api/v1/flights/getNearByAirports
