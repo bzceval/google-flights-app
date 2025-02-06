@@ -9,6 +9,8 @@ import {
   Chip,
   Grid2,
   Stack,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -106,9 +108,10 @@ const NearByAirports = () => {
           p: 2,
         }}
       >
-        <Typography color="error">
-          Location information could not be retrieved
-        </Typography>
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          This is an error Alert with a scary title.
+        </Alert>
       </Box>
     );
   }
