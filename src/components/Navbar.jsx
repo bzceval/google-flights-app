@@ -2,15 +2,12 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Menu,
-  MenuItem,
   Tooltip,
   Typography,
   Box,
   Divider,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NightlightIcon from "@mui/icons-material/Nightlight";
@@ -20,13 +17,7 @@ import GoogleDarkIcon from "../assets/images/googlelogo_dark.svg";
 import GoogleLightIcon from "../assets/images/googlelogo_light.svg";
 
 const Navbar = () => {
-  // const theme = useTheme();
   const darkMode = true;
-  const settings = ["Use device default", "Dark Mode", "Light Mode"];
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleMenuToggle = (event) => setAnchorEl(event.currentTarget);
-  const handleMenuClose = () => setAnchorEl(null);
 
   return (
     <AppBar
@@ -66,10 +57,7 @@ const Navbar = () => {
           }}
         >
           <Tooltip title="Change appearance">
-            <IconButton
-              onClick={handleMenuToggle}
-              sx={{ display: "flex", alignItems: "center" }}
-            >
+            <IconButton sx={{ display: "flex", alignItems: "center" }}>
               {darkMode ? (
                 <LightModeOutlinedIcon fontSize="small" />
               ) : (
@@ -77,19 +65,6 @@ const Navbar = () => {
               )}
             </IconButton>
           </Tooltip>
-
-          <Menu
-            sx={{ mt: "45px" }}
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleMenuClose}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
 
           <Tooltip
             title="Google apps"
