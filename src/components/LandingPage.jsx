@@ -40,7 +40,7 @@ const LandingPage = ({ darkMode }) => {
         alt="Google Flights"
         style={{ maxWidth: "100%", height: "auto" }}
       />
-      <Typography variant="subtitle1" sx={textStyle}>
+      <Typography data-test="landing-text" variant="subtitle1" sx={textStyle}>
         Flights
       </Typography>
     </Box>

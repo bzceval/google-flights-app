@@ -39,6 +39,7 @@ const Navbar = () => {
           <IconButton sx={{ "&:hover": { backgroundColor: "transparent" } }}>
             <Link to="/">
               <img
+                data-test="logo"
                 src={darkMode ? GoogleDarkIcon : GoogleLightIcon}
                 alt="Google Logo"
                 style={{
