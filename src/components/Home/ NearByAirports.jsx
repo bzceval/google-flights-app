@@ -127,7 +127,7 @@ const NearByAirports = () => {
             {position && (
               <MapContainer
                 center={position}
-                zoom={3}
+                zoom={1.5}
                 style={{ height: "250px", width: "100%", marginTop: "20px" }}
               >
                 <TileLayer
