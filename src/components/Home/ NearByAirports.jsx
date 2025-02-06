@@ -110,7 +110,7 @@ const NearByAirports = () => {
       >
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
-          This is an error Alert with a scary title.
+          Location information could not be retrieved.
         </Alert>
       </Box>
     );
