@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("home", () => {
+  cy.get("[data-test='logo']").should("be.visible");
+  const expectedLogoSrc = "/static/media/googlelogo_dark";
+  cy.get("[data-test='logo']")
+    .should("have.attr", "src")
+    .and("include", expectedLogoSrc);
+});

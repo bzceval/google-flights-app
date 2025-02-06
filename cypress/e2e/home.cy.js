@@ -1,6 +1,9 @@
 describe("home-page", () => {
-  it("home-page-redirect", () => {
+  beforeEach(() => {
     cy.visit("http://localhost:3000/");
+    cy.viewport(1200, 1200);
+  });
+  it("home-page-redirect", () => { 
     cy.get("[data-test='logo']").should("be.visible");
     const expectedLogoSrc = "/static/media/googlelogo_dark";
     cy.get("[data-test='logo']")
