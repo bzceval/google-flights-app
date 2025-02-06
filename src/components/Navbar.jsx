@@ -3,22 +3,22 @@ import {
   Toolbar,
   IconButton,
   Tooltip,
-  Typography,
   Box,
   Divider,
+  Button,
+  useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NightlightIcon from "@mui/icons-material/Nightlight";
 import AppsIcon from "@mui/icons-material/Apps";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import GoogleDarkIcon from "../assets/images/googlelogo_dark.svg";
 import GoogleLightIcon from "../assets/images/googlelogo_light.svg";
 
 const Navbar = () => {
   const darkMode = true;
-
+  const theme = useTheme();
   return (
     <AppBar
       position="static"
@@ -74,24 +74,15 @@ const Navbar = () => {
               <AppsIcon />
             </IconButton>
           </Tooltip>
-
-          <Tooltip
-            title={
-              <Box>
-                <Typography sx={{ fontWeight: "bold", fontSize: ".7rem" }}>
-                  Google accounts
-                </Typography>
-                <Typography sx={{ fontSize: ".7rem" }}>Busra Ceval</Typography>
-                <Typography sx={{ fontSize: ".7rem" }}>
-                  busraaceval@gmail.com
-                </Typography>
-              </Box>
-            }
+          <Button
+            variant="contained"
+            sx={{
+              textTransform: "capitalize",
+              backgroundColor: theme.palette.mainColors.mainBlue,
+            }}
           >
-            <IconButton sx={{ display: "flex", alignItems: "center" }}>
-              <AccountCircle />
-            </IconButton>
-          </Tooltip>
+            Sign in
+          </Button>
         </Box>
       </Toolbar>
       <Divider />
