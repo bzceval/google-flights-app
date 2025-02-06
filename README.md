@@ -24,8 +24,8 @@ This project is inspired by Google Flights and features one-way flight ticket se
 - Extracts;
   - Git
   - Github
-  - Scrum
   - Vercel
+  - Scrum
 
 ## Google Flight Basic Version Endpoint Path
 
